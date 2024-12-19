@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://jiawei804.github.io/next-blog/2024/12/transformer/2024/12/transformer/1.png">
 <meta property="article:published_time" content="2024-12-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-12-19T10:30:38.402Z">
+<meta property="article:modified_time" content="2024-12-19T10:46:18.227Z">
 <meta property="article:author" content="Jiawei Zhang">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="深度学习">
@@ -203,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-19 18:30:38" itemprop="dateModified" datetime="2024-12-19T18:30:38+08:00">2024-12-19</time>
+      <time title="Modified: 2024-12-19 18:46:18" itemprop="dateModified" datetime="2024-12-19T18:46:18+08:00">2024-12-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,11 +251,9 @@ Embedding）。顾名思义，位置编码用来告诉模型序列每个token之
 love you”和“you love
 I（me）”表示了完全不同的意思，当然这个例子并不恰当，但是其阐明了单词在句子中的位置对句子的语义所造成的影响。</p>
 <p>最新的位置编码RoPE展示了强大的能力，除此之外，位置编码的变体仍然有很多。但是下面我介绍这篇论文里提出的一种位置编码——正余弦位置编码。</p>
-<p><span class="math display">\[
-\begin{equation}
+<p><span class="math display">\[ \begin{equation}
 \text{PE}_{i, 2k} = \sin\left( \frac{i}{10000^{2k/d}} \right)
-\end{equation}
-\]</span></p>
+\end{equation} \]</span></p>
 <p><span class="math display">\[
 \begin{equation}
 \text{PE}_{i, 2k+1} = \cos\left( \frac{i}{10000^{(2k+1)/d}} \right)
