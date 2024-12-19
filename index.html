@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-19 17:35:55" itemprop="dateModified" datetime="2024-12-19T17:35:55+08:00">2024-12-19</time>
+      <time title="Modified: 2024-12-19 17:38:01" itemprop="dateModified" datetime="2024-12-19T17:38:01+08:00">2024-12-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,10 +243,16 @@ Embedding）。顾名思义，位置编码用来告诉模型序列每个token之
 love you”和“you love
 I（me）”表示了完全不同的意思，当然这个例子并不恰当，但是其阐明了单词在句子中的位置对句子的语义所造成的影响。</p>
 <p>最新的位置编码RoPE展示了强大的能力，除此之外，位置编码的变体仍然有很多。但是下面我介绍这篇论文里提出的一种位置编码——正余弦位置编码。</p>
-<p><span class="math display">\[\text{PE}_{i, 2k} = \sin\left(
-\frac{i}{10000^{2k/d}} \right)\]</span></p>
-<p><span class="math display">\[\text{PE}_{i, 2k+1} = \cos\left(
-\frac{i}{10000^{(2k+1)/d}} \right)\]</span></p>
+<p><span class="math display">\[
+\begin{equation}
+\text{PE}_{i, 2k} = \sin\left( \frac{i}{10000^{2k/d}} \right)
+\end{equation}
+\]</span></p>
+<p><span class="math display">\[
+\begin{equation}
+\text{PE}_{i, 2k+1} = \cos\left( \frac{i}{10000^{(2k+1)/d}} \right)
+\end{equation}
+\]</span></p>
 <p>其中，i 是词在序列中的位置（从0开始），k
 是编码的维度索引（从0开始），d 是位置编码的总维度。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_1d_sincos_pos_embed</span>(<span class="params">self, embed_dim, seq_len</span>):</span><br><span class="line">    <span class="comment"># Compute the positional encodings once in log space.</span></span><br><span class="line">    pe = torch.zeros(seq_len, embed_dim).<span class="built_in">float</span>()</span><br><span class="line">    pe.require_grad = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    position = torch.arange(<span class="number">0</span>, seq_len).<span class="built_in">float</span>().unsqueeze(<span class="number">1</span>)</span><br><span class="line">    div_term = (torch.arange(<span class="number">0</span>, embed_dim, <span class="number">2</span>).<span class="built_in">float</span>()</span><br><span class="line">                * -(math.log(<span class="number">10000.0</span>) / embed_dim)).exp()</span><br><span class="line"></span><br><span class="line">    pe[:, <span class="number">0</span>::<span class="number">2</span>] = torch.sin(position * div_term)</span><br><span class="line">    pe[:, <span class="number">1</span>::<span class="number">2</span>] = torch.cos(position * div_term)</span><br><span class="line"></span><br><span class="line">    pe = pe.unsqueeze(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> pe</span><br></pre></td></tr></table></figure>
