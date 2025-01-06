@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://jiawei804.github.io/next-blog/2025/01/LAPTOP-Diff/2.png">
 <meta property="og:image" content="https://jiawei804.github.io/next-blog/2025/01/LAPTOP-Diff/3.png">
 <meta property="article:published_time" content="2025-01-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-06T01:31:25.191Z">
+<meta property="article:modified_time" content="2025-01-06T01:36:24.903Z">
 <meta property="article:author" content="Jiawei Zhang">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="扩散模型">
@@ -209,7 +209,7 @@ Distillation</span></a></li></ol></div>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-01-06 09:31:25" itemprop="dateModified" datetime="2025-01-06T09:31:25+08:00">2025-01-06</time>
+      <time title="Modified: 2025-01-06 09:36:24" itemprop="dateModified" datetime="2025-01-06T09:36:24+08:00">2025-01-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -273,17 +273,19 @@ SDM
 class="math inline">\(\epsilon_ori\)</span>表示原始模型的输出，<span
 class="math inline">\(\epsilon(r_1,r_2,...,r_m)\)</span>表示去掉<span
 class="math inline">\(r_1,r_2,...,r_m\)</span>层之后的网络的输出，于是优化问题可以写成：</p>
-<p>$$ <span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \min_{r_1, \ldots, r_m} \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) -
-\epsilon_{\text{ori}} \right\|_2^2
+\epsilon_{\text{ori}} \right\|_2^2 \\
 
 \text{s.t.} \ \{r_1, \ldots, r_m\} \subseteq L^n, \ \sum_{i=1}^m
 \text{params}(r_i) \geq P,
-\end{equation}\]</span> $$</p>
-<p>其中，<span class="math inline">\(param(r_i)\)</span>表示<span
-class="math inline">\(r_i\)</span>层的参数数量，P表示根据规定的剪枝率计算得到的要剪枝的参数数量。直接求解上式是一个NP-hard问题，于是作者开始对该式进行近似。</p>
-<p>首先，通过不等式变换：</p>
-<p><span class="math display">\[
+\end{equation
+
+其中，$param(r_i)$表示$r_i$层的参数数量，P表示根据规定的剪枝率计算得到的要剪枝的参数数量。直接求解上式是一个NP-hard问题，于是作者开始对该式进行近似。
+
+首先，通过不等式变换：
+
+$$
 \begin{equation}
 \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) - \epsilon_{\text{ori}}
 \right\|_2^2
@@ -293,8 +295,7 @@ class="math inline">\(r_i\)</span>层的参数数量，P表示根据规定的剪
 + \cdots
 + \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) - \epsilon(r_1, \ldots,
 r_{m-1}) \right\|_2^2.
-\end{equation}
-\]</span></p>
+\end{equation}\]</span> $$</p>
 <p>于是，优化目标近似为如下形式：</p>
 <p>$$ <span class="math display">\[\begin{equation}
 \min_{r_1, \ldots, r_m}
@@ -306,7 +307,7 @@ r_{m-1}) \right\|_2^2,
 
   \text{s.t.} \ \{r_1, \ldots, r_m\} \subseteq L^n, \ \sum_{i=1}^m
 \text{params}(r_i) \geq P.
-  \end{equation}\]</span></p>
+\end{equation}\]</span></p>
 <p>$$</p>
 <p>但这仍然是个NP-hard问题，还要再进行化简。在这个式子中，每一项都是原始网络（剪枝或未剪枝）与删除一个新的额外层的网络之间的均方误差损失。作者提出一个假设，即移除同一层<span
 class="math inline">\(r_i\)</span>所导致的均方误差损失在不同网络中是相似的。公式假设如下：</p>
@@ -473,7 +474,7 @@ L2 范数带来的影响：</p>
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/next-blog/js/third-party/math/mathjax.js"></script>
 
 
