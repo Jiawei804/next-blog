@@ -19,31 +19,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"jiawei804.github.io","root":"/next-blog/","images":"/next-blog/images","scheme":"Mist","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/next-blog/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jiaweijson.top","root":"/next-blog/","images":"/next-blog/images","scheme":"Mist","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/next-blog/js/config.js"></script>
 
     <meta name="description" content="越来越多的大型视觉模型在图像和视频生成领域展现了强大的能力，与此同时，高昂的训练成本和推理成本阻碍了这些基础模型的应用，如何有效的压缩基础模型，使其在资源受限的场景（例如，自动驾驶、手机等能源和带宽限制的设备，需要快速响应和紧凑的内存占用。）中实现高效的模型推理，是目前重要的研究课题。这篇文章我想聊一聊模型压缩技术之一——剪枝。 我起初在调研视觉模型的推理加速方案，尤其针对扩散模型。目前技术分为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高效压缩 | 深度神经网络剪枝">
-<meta property="og:url" content="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/index.html">
+<meta property="og:url" content="https://jiaweijson.top/next-blog/2024/12/pruning_survey/index.html">
 <meta property="og:site_name" content="张佳伟的博客">
 <meta property="og:description" content="越来越多的大型视觉模型在图像和视频生成领域展现了强大的能力，与此同时，高昂的训练成本和推理成本阻碍了这些基础模型的应用，如何有效的压缩基础模型，使其在资源受限的场景（例如，自动驾驶、手机等能源和带宽限制的设备，需要快速响应和紧凑的内存占用。）中实现高效的模型推理，是目前重要的研究课题。这篇文章我想聊一聊模型压缩技术之一——剪枝。 我起初在调研视觉模型的推理加速方案，尤其针对扩散模型。目前技术分为">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/1.png">
-<meta property="og:image" content="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/2.png">
-<meta property="og:image" content="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/3.png">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2024/12/pruning_survey/1.png">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2024/12/pruning_survey/2.png">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2024/12/pruning_survey/3.png">
 <meta property="article:published_time" content="2024-12-23T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-01-03T04:59:07.796Z">
 <meta property="article:author" content="Jiawei Zhang">
 <meta property="article:tag" content="技术，pruning">
 <meta property="article:tag" content="inference speed">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/1.png">
+<meta name="twitter:image" content="https://jiaweijson.top/next-blog/2024/12/pruning_survey/1.png">
 
 
-<link rel="canonical" href="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/">
+<link rel="canonical" href="https://jiaweijson.top/next-blog/2024/12/pruning_survey/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiawei804.github.io/next-blog/2024/12/pruning_survey/","path":"2024/12/pruning_survey/","title":"高效压缩 | 深度神经网络剪枝"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2024/12/pruning_survey/","path":"2024/12/pruning_survey/","title":"高效压缩 | 深度神经网络剪枝"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>高效压缩 | 深度神经网络剪枝 | 张佳伟的博客</title>
@@ -173,7 +173,7 @@ in early training）</span></a></li><li class="nav-item nav-level-4"><a class="n
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jiawei804.github.io/next-blog/2024/12/pruning_survey/">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2024/12/pruning_survey/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/next-blog/images/avatar.gif">
