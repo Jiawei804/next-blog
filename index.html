@@ -123,13 +123,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/next-blog/categories/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -151,6 +151,139 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/03/Normalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/03/Normalization/" class="post-title-link" itemprop="url">模型优化|归一化笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-03-22 00:00:00 / Modified: 19:59:04" itemprop="dateCreated datePublished" datetime="2025-03-22T00:00:00+08:00">2025-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%8A%80%E6%9C%AF/%E5%BD%92%E4%B8%80%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">归一化</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>归一化技术从神经网络发展到今天，已经诞生了众多种类。批归一化，层归一化，组归一化等。这篇文章总结了系统的归一化技术。</p>
+<h1 id="批归一化batch-normalization">批归一化|Batch Normalization</h1>
+<p>总所周知，神经网络都是通过梯度下降算法来优化训练，而更流行的一种方式是小批量随机梯度下降，介于one-sample随机梯度下降和full-samples随机梯度下降之间。然而，不合适的学习率和参数初始化有可能导致训练坍塌，BN正是为了缓解这一问题而设计。</p>
+<p>在提出BN的论文中，作者认为BN有效减弱了内部协变量偏倚（ICS）问题——as
+the change in the distribution of network activations due to the change
+in network parameters during training。</p>
+<p>具体来说，对于一个Batch，对其本身做归一化。假设一个Batch有n个样本，每个样本有d个特征，那么对于第k个特征归一化的结果:</p>
+<p><span class="math display">\[
+\begin{equation}
+\hat{x}^{(k)} = \frac{x^{(k)} -
+E[x^{(k)}]}{\sqrt{\mathrm{Var}[x^{(k)}]}}
+\end{equation}
+\]</span></p>
+<p>其中E和Var分别表示在第k个特征上这个批量中所有的样本的均值和方差。</p>
+<p>这其中也存在一些问题，比如新的Batch分布可能会破坏已经学习到的特征。所以BN还添加了两个可以学习的变量<span
+class="math inline">\(\beta\)</span>和<span
+class="math inline">\(\gama\)</span>:</p>
+<p><span class="math display">\[
+\begin{equation}
+y^{(k)} = \gamma^{(k)}\hat{x}^{(k)} + \beta^{(k)}
+\end{equation}
+\]</span></p>
+<p>当 <span class="math inline">\(\gamma^{(k)} =
+\sqrt{\mathrm{Var}[x^{(k)}]}\)</span> 并且 <span
+class="math inline">\(\beta^{(k)} = E[x^{(k)}]\)</span> 时，<span
+class="math inline">\(y^{(k)} = x^{(k)}\)</span>。</p>
+<p>BN在测试过程中的所需的均值和方差已经在训练过程中存储下来，这是由深度学习框架已经实现的。这样单样本推理仍然可以正常进行。</p>
+<h1 id="层归一化batch-normalization">层归一化|Batch Normalization</h1>
+<p>组归一化要求每个Batch中的样本长度必须一致，然而在现实情况下，文本等序列数据并不是等长的1，尽管会在数据预处理时统一大小，但很明显填充位置并不代表真实数据的分布，这样的归一化是没有效果的，甚至损害模型的收敛。BN在面对RNN这种网络时显得束手无策；同时，BN在面对小批次数据时，如资源受限的环境中，性能也会大幅下降。</p>
+<p>令人惊喜的是，LN完美的解决了这两个问题；BN对同一特征的同一通道所有批次内样本做归一化，而LN则对同一样本的同一通道的所有特征做归一化。本质上LN避开了在多个样本上进行归一化的操作，只在一个样本的不同通道上对所有特征做归一化。</p>
+<p>假设某个样本在经过某一层之后a，特征数(神经元数量)为H，均值与方差:</p>
+<p><span class="math display">\[
+\begin{equation}
+\mu = \frac{1}{H} \sum_{i = 1}^{H} a_i \quad
+\sigma = \sqrt{\frac{1}{H} \sum_{i = 1}^{H} (a_i - \mu)^2}
+\end{equation}
+\]</span></p>
+<p>归一化之后<span class="math inline">\(\hat{a}\)</span>:</p>
+<p><span class="math display">\[
+\hat{\mathbf{a}}
+\frac{\mathbf{a}-\mu}{\sqrt{\left(\sigma\right)^{2}+\epsilon}}
+\]</span></p>
+<p>与BN类似，LN也加入了增益（gain）<span
+class="math inline">\(g\)</span>和偏置（bias）<span
+class="math inline">\(b\)</span>，对<span
+class="math inline">\(\hat{a}\)</span>进行二次缩放:</p>
+<p><span class="math display">\[
+\begin{equation}
+y = f(\mathbf{g} \odot \hat{\mathbf{a}}+\mathbf{b})
+\end{equation}
+\]</span></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1629,130 +1762,9 @@ Transformer在处理图像生成任务时的有效性，也推动了后续将 Tr
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2024/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/next-blog/images/avatar.gif">
-      <meta itemprop="name" content="Jiawei Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张佳伟的博客">
-      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张佳伟的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2024/12/hello-world/" class="post-title-link" itemprop="url">我们终将毁灭于我们所热爱的东西·Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-06 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-06T00:00:00+08:00">2024-12-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-01-06 18:06:22" itemprop="dateModified" datetime="2025-01-06T18:06:22+08:00">2025-01-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%9D%82%E8%B0%88/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>看着屏幕左上角的发送按钮，我激动的按下，在朋友圈官宣我和我的博客，时间定格在2023年12月31日。</p>
-<hr />
-<p>高考结束，和大多数人一样，我对大学充满了期待，我想象着未来四年的大学生活。</p>
-<hr />
-<p>看着屏幕上的<code>printf("Hello World!\n")</code>，我点击运行键，黑窗弹出，命运的齿轮开始转动。</p>
-<hr />
-<p>高考发挥一般，华北电力大学是我的第一志愿，尽管我达到了学校的最低分数线，但是已经没有选专业的余地了，被第六志愿专业机械工程录取，那时候C语言这门课在大一下半年才上，我第一次接触编程是在大一寒假，在此之前，我一度以为编程和黑客、制作游戏画等号，那些编程很厉害的肯定可以随便盗取别人的账号。</p>
-<p>翻了两页《C Primer
-Plus》，房间里暖色的灯光让我昏昏欲睡，那时候我还不知道从入门到<del>放弃</del>（精通）这个词，但无论知道与否，新手小白都不应该从这本书看起。我放弃了，去MOOC上听顶顶大名的浙大翁恺老师主讲的《C语言程序设计》。如果让我列举在我以往的人生中所听过的最让人醍醐灌顶的课程，那一定有翁恺老师的一个位置。如果冠之以“最”，我觉得也没有什么不合适的，往后至今，是《C语言程序设计》这门课程真正启蒙了我这个小白，让我深深的爱上了编程。有必要炫耀一下，新学期开设的C语言课程，我没有听过一节，最后拿到了99分的成绩，这也很大程度上让我做出转专业的决定。</p>
-<hr />
-<p>我看着推免名单上自己的名字，交织的回忆涌上心头。</p>
-<hr />
-<p>两年的时间，不足以让我学到特别有用的东西，实话实说，我们学校CS学科建设也真的一般般，2024年才拥有博士点。大三下学期3月份开学，我陷入了困境，以我的能力，弃保并从现在开始备考，溺死在考研的汪洋大海中算是一个极小概率事件。但我还是犹豫了，我知道我其实对自己也不算自信，作为小镇做题家跻身到北京这座大城市里，我见识了太多惊才艳艳的同龄人。我没有底气，我去问我的父母，他们希望我稳定，对他们而言211高校已经可以找到很好的工作了。在大多数家长的眼里，似乎每个孩子的人生路线已经被他们规划，这条路平坦、安全、没有意外；这条路普通、平凡、安稳；甚至这条路就像流水线一样一眼望得到头。我没有得到支持，我不知道如果我考不上会怎样，我好像除去大一，这一年半的时间也没有学习到特别多足以支撑我找到一份满意的工作的技能。我没能说服自己，也没能下定决心，最终我仍然选择留在华电，攻读硕士学位。</p>
-<hr />
-<p>“如果没有疫情，如果我再多学一点，我高考会不会发挥的更出色，我的人生会变得不太一样？”...</p>
-<p>“如果报考志愿时，我第一志愿填了苏州大学呢（那年我也可以被苏大录取）？”...</p>
-<p>“如果我没有转专业，在我原先的机械专业也挺好吧，专业第一，各种奖励也是优先我拿。”...</p>
-<p>“如果我放弃保研，我现在是为上岸欢呼，还是在为一战失败而落泪。”...</p>
-<hr />
-<p>我时常觉得自己的人生是幸运的，在人生大事上总会有奇妙的相遇与邂逅。</p>
-<hr />
-<p>其实大学前三年，我好像并没有发现自己真正的兴趣，我因为喜欢编程转来了计算机专业，但这里似乎和我想象的世界并不一样。枯燥的课程，老旧的知识，老师的手里拿着十年前工业出版社的书，讲着已经被社会所淘汰的技术。讲台下的同学们睁着清澈的双眼，渴望学习到他们未来能够生计的技术。教堂的教父从来不会告诉台下的信徒，那些誓言和祷告不过是虚假的自欺欺人。同样，老师也不会告诉学生，今天你们学习的东西，称之为“历史”。在这巨大的草台班子上，每个人都在逢场作戏，我是戏中的观众，负责鼓掌和喝彩。</p>
-<p>在网页上确定了学校的推免offer后，我有一瞬间的快乐的，但是那种快乐片刻便烟消云散，我告诉自己即便还在这里读研，但我依然可以通过找实习来锻炼自己，我一定可以的。</p>
-<p>一封、两封、三封，简历都石沉大海。尽管我用了一假期的时间掌握深度学习技术，试图在OpenAI带火的人工智能领域分一杯羹，但这看起来就是一个笑话（实际上，现在的我再去看这件事，确实是一个笑话），初生牛犊，撞得头破血流，才吸取到一点宝贵的人生经验。</p>
-<p>我的人生完了，我最害怕的事情要发生了，泯于众人，成为无数籍籍无名其中之一。</p>
-<hr />
-<p>“hi，你可以叫我师兄，你学过pytorch吗？...”</p>
-<hr />
-<p>2023年10月16日，我的导师让我和正在国外做博士后的长林师兄合作，和另一位学弟组建了一个AI课题组，看着师兄的简历，ReLER
-Lab、顶会、顶刊，中科大本科毕业，悉尼科技大学直博4年毕业，博士后...我无法抑制心中的激动，在混沌的地方呆了太久，忘记了世界的缤纷。我差一点沉沦，却又因机缘巧合被命运拉了一把。</p>
-<p>小说里主角跳下了悬崖，但幸运地掉进了神秘的洞穴里，主角捡起了地上的武林秘籍，此后，便静心修炼，与日月争辉。</p>
-<p>现在的我依然没什么拿的出手的成就，但我相信我能做到。或许以往的人生，成功充满了悲观主义色，但现在，我就是在一点点地做，少想一些，多做一些。我一直以为“学习是一件痛苦的事”一定是至理名言，是永恒不变的真理，但现在，对于我来说，深耕于计算机视觉，阅读和领悟别人的工作，是一件倍感幸福的事。“做你真正喜欢的工作，你就会有无穷的动力。不同于以往你被迫地学习、考试、满足学校、社会、家庭的各种KPI。现在你为自己而活，你真正地在为自己做一些事情。而这些事情，或许在某一天，it
-takes your breath away.”</p>
-<h1 id="hello-world">Hello World</h1>
-<p>我开始写博客，并决定要坚持下去，不一定是和技术相关。我要把自己想的东西记录下来，把我想说的用文字描述下来。当我开始写的时候，我才意识到自己的表达能力有多么糟糕，我觉得我有很多丰富的经历，但是当我和朋友讲述的时候，却只能用只言片语描述。我失去了人类最重要的工具——表达能力，语言匮乏，才是一个人真正的贫瘠，我立志要讲好故事。写博客和写公众号文章不一样，这种内容的关注度有限，但我能否凭一己之力改变搜索推荐机制呢？就看我以后能写出什么样的文章吧。写我所想，记我所思。或许某一天我小有成就，又或许某一天我觉得人生碌碌无为。我想看看，如果那一天到来，我是否也在社会这个江湖上闯出一些名声。</p>
-<p>如果人终将毁灭与自己所热爱的东西，那么在此之前，请让我沉沦。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/next-blog/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/next-blog/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>
