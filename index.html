@@ -190,7 +190,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-03-28 00:00:00 / Modified: 18:25:42" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+      <time title="Created: 2025-03-28 00:00:00 / Modified: 18:46:56" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@ score = avg_{dist} + std_{dist}
 \end{equation} \]</span></p>
 <p>也许你会问为什么是均值和方差相加，而不是单独用均值或方差，或者二者相城。实际上，如何组合以及用哪种方式，是要有前置实验做相关性分析。</p>
 <figure>
-<img src="/next-blog/2025/03/LD-Pruner/fig3.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig3.jpg" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图3: Qualitative comparison of the impact of various combination methods
 for average and standard deviation in our proposed scoring metric, with
@@ -277,7 +277,7 @@ SD. The results are without finetuning.
 </figure>
 <p>如图3所示，作者在定性比较中发现，具有较小均值的层，文章里称之为operator（算子）延迟了图像退化为噪声的时间，即删除带来的损害更小；而较小的方差意味着可以保留更多的图像细节。</p>
 <figure>
-<img src="/next-blog/2025/03/LD-Pruner/fig4.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig4.jpg"  style="width:90%;">
 <figcaption style="font-size: 14px;">
 图4: Quantitative comparison of the impact of various combination
 methods for average and standard deviation in our proposed scoring
@@ -286,16 +286,52 @@ finetuning.
 </figcaption>
 </figure>
 <p>在定量实验中，在FID的比较中，相加略优于相乘，最终作者选用了相加作为得分公式。</p>
+<figure>
+<img src="/next-blog/2025/03/LD-Pruner/fig6.jpg"  style="width:90%;">
+<figcaption style="font-size: 14px;">
+图5: Efficient Pruning for LDMs.
+</figcaption>
+</figure>
+<p>LD-Pruner算法如上，其中k类似于剪枝率，表示要剪枝多少层网络。</p>
 <h1 id="剪枝后训练">剪枝后训练</h1>
 <p>通常剪枝都会伴随着模型的重新训练，本文中使用知识蒸馏(Knowledge
 Distillation,
 KD)训练剪枝后的模型。LD-Pruner沿用BK-SDM中提出的蒸馏方法，即在特征水平和输出水平上对齐教师模型。特征水平上，在每个stage（Up、Down、Middle）之后的结果进行对齐；输出水平上，是指最终模型的输出结果进行对齐。</p>
+<h1 id="实验">实验</h1>
+<p>作者分别在文生图(T2I)、无条件图像生成(UIG)、无条件音频生成(UAG)任务上实现他们的方法，证明了LD-Pruner的有效性。</p>
 <figure>
-<img src="/next-blog/2025/03/LD-Pruner/fig5.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig7.jpg" style="width:90%;">
 <figcaption style="font-size: 14px;">
-图4: Qualitative comparison on zero-shot MS-COCO benchmark on T2I.
+图6: Comparison of different models for T2I Generation, on the MS-COCO
+256 × 256 validation set. Speedup values are measured relatively to
+SD-v1.4.
 </figcaption>
 </figure>
+<figure>
+<img src="/next-blog/2025/03/LD-Pruner/fig5.jpg" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图7: Qualitative comparison on zero-shot MS-COCO benchmark on T2I.
+</figcaption>
+</figure>
+<p>作者在MS-COCO数据集上详细展示了定性和定量的实验结果，T2I上剪枝后的模型FID上甚至超越了基线模型。</p>
+<figure>
+<img src="/next-blog/2025/03/LD-Pruner/fig8.jpg" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图8: Compression performance on UAG task with AudioDiffusion. When
+finetuning, we proceed for 12k steps.
+</figcaption>
+</figure>
+<p>图8展示了在UAG上的实验结果，剪枝之后的模型微调后，在FAD上超越了基线模型。</p>
+<figure>
+<img src="/next-blog/2025/03/LD-Pruner/fig9.jpg" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图9: FID scores for our compressed model (31 operators modified) trained
+from scratch and with preserved pre-training weights, for UIG on
+CelebA-HQ 256 × 256. In both case, the exact sametraining is applied.
+The FID for the original model is 13.85.
+</figcaption>
+</figure>
+<p>图9展示了UIG实验结果，对比了不加载预训练权重的模型，证明了剪枝后加载预训练权重的重要性，实验在CeleBA-HQ上进行。</p>
 
       
     </div>
