@@ -190,7 +190,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-03-28 00:00:00 / Modified: 19:16:45" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+      <time title="Created: 2025-03-28 00:00:00 / Modified: 19:20:50" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -253,7 +253,7 @@ std_{dist} = |std_{orig}-std_{mod}|_2
 <p>其中 <span
 class="math inline">\(||_{2}\)</span>表示欧几里得范数。</p>
 <p><span class="math display">\[ \begin{equation}
-avg_{orig} = \frac{1}{N_{gen}} \sum_{i = 1}^{N_{gen}} l_{orig,i}\\
+avg_{orig} = \frac{1}{N_{gen}} \sum_{i = 1}^{N_{gen}} l_{orig,i} \\
 avg_{mod} = \frac{1}{N_{gen}} \sum_{i = 1}^{N_{gen}} l_{mod,i}
 \end{equation} \]</span></p>
 <p><span class="math display">\[ \begin{equation}
@@ -519,9 +519,15 @@ y = f(\mathbf{g} \odot \hat{\mathbf{a}}+\mathbf{b})
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-03-19 00:00:00 / Modified: 18:55:15" itemprop="dateCreated datePublished" datetime="2025-03-19T00:00:00+08:00">2025-03-19</time>
+      <time title="Created: 2025-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-19T00:00:00+08:00">2025-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-28 19:19:17" itemprop="dateModified" datetime="2025-03-28T19:19:17+08:00">2025-03-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -561,7 +567,7 @@ y = f(\mathbf{g} \odot \hat{\mathbf{a}}+\mathbf{b})
 NLP”提出，策略是在Transformer的模型结构中在注意力层和前馈网络层之后加入两层全连接层和非线性激活函数，被称之为Adapter，第一层将d维向量映射到m维向量，第二层将m维向量映射回d维，以保持后续正确的残差连接，一个Adapter的总参数量为<span
 class="math inline">\((dm+m)+(md+d)\)</span>.如果你了解Transformer的实现，那么并不难知道Adapter加在哪里。</p>
 <figure>
-<img src="/next-blog/2025/3/transformer/微调1.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/fine-tuning/微调1.jpg" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图1: Adapter
 </figcaption>
@@ -571,7 +577,7 @@ class="math inline">\((dm+m)+(md+d)\)</span>.如果你了解Transformer的实现
 LANGUAGE
 MODELS”提出了LoRA低秩自适应微调技术。LoRA的策略是在Transformer的自主力层中，对q、v（注意力层中计算的三个向量分别是q、k、v）加入额外的类似于漏斗的全连接网络，与Adapter相似，第一个全连接层将维度缩小到r，第二个全连接层将维度恢复，之后将计算的q值与LORA相加。更精炼的概括是，LoRA在自注意力子层之间的q和v结果中添加了两个低秩矩阵进行微调。在研究中，LORA通常并不归类于Adapter中。</p>
 <figure>
-<img src="/next-blog/2025/3/transformer/微调2.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/fine-tuning/微调2.jpg" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图1: Adapter
 </figcaption>
