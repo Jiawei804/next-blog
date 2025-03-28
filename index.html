@@ -190,7 +190,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-03-28 00:00:00 / Modified: 18:12:46" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+      <time title="Created: 2025-03-28 00:00:00 / Modified: 18:25:42" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@ score = avg_{dist} + std_{dist}
 \end{equation} \]</span></p>
 <p>也许你会问为什么是均值和方差相加，而不是单独用均值或方差，或者二者相城。实际上，如何组合以及用哪种方式，是要有前置实验做相关性分析。</p>
 <figure>
-<img src="/next-blog/2025/3/LD-Pruner/fig3.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig3.jpg" alt="Transformer" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图3: Qualitative comparison of the impact of various combination methods
 for average and standard deviation in our proposed scoring metric, with
@@ -277,7 +277,7 @@ SD. The results are without finetuning.
 </figure>
 <p>如图3所示，作者在定性比较中发现，具有较小均值的层，文章里称之为operator（算子）延迟了图像退化为噪声的时间，即删除带来的损害更小；而较小的方差意味着可以保留更多的图像细节。</p>
 <figure>
-<img src="/next-blog/2025/3/LD-Pruner/fig4.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig4.jpg" alt="Transformer" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图4: Quantitative comparison of the impact of various combination
 methods for average and standard deviation in our proposed scoring
@@ -291,7 +291,7 @@ finetuning.
 Distillation,
 KD)训练剪枝后的模型。LD-Pruner沿用BK-SDM中提出的蒸馏方法，即在特征水平和输出水平上对齐教师模型。特征水平上，在每个stage（Up、Down、Middle）之后的结果进行对齐；输出水平上，是指最终模型的输出结果进行对齐。</p>
 <figure>
-<img src="/next-blog/2025/3/LD-Pruner/fig5.jpg" alt="Transformer" style="width:90%;">
+<img src="/next-blog/2025/03/LD-Pruner/fig5.jpg" alt="Transformer" style="width:90%;">
 <figcaption style="font-size: 14px;">
 图4: Qualitative comparison on zero-shot MS-COCO benchmark on T2I.
 </figcaption>
