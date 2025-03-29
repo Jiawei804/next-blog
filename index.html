@@ -123,13 +123,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/next-blog/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -160,6 +160,155 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/03/BK-SDM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/03/BK-SDM/" class="post-title-link" itemprop="url">论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-03-29 00:00:00 / Modified: 10:58:08" itemprop="dateCreated datePublished" datetime="2025-03-29T00:00:00+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/" itemprop="url" rel="index"><span itemprop="name">剪枝</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" itemprop="url" rel="index"><span itemprop="name">知识蒸馏</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>稳定扩散模型通常由数十亿个参数组成，文本生成图像任务中在生成高质量图像时需要很高的计算要求。为了提高效率，最近的研究包括剪枝、蒸馏、量化的相关工作致力于此。BK-SDM证明了在稳定扩散模型上剪枝再蒸馏训练的巨大潜力。在蒸馏训练中，第一次在特征和输出水平上构建蒸馏损失函数进行训练，用更少的资源和成本训练出具有竞争力的T2I模型，且更易部署在边缘设备上。</p>
+<h1 id="手工剪枝">手工剪枝</h1>
+<p>BK-SDM通过经验手动设计了三种型号的剪枝后SDM。具体结构如图1所示。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig1.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图1: Block removal from the denoising U-Net.
+</figcaption>
+</figure>
+<p>在图2的相关性分析中，作者认为CLIP分数无法正确反映层重要性，(a)中删除较多的Attn层而CLIP分数并没有显著下降，CLIP评分修剪敏感性的重要性标准会导致注意力块的过度修剪，最终结果不如手工设计的剪枝网络性能，结果对比展示在图3中。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig2.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图2: Importance of (a) each block and (b) each group of paired/triplet
+blocks.
+</figcaption>
+</figure>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig3.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图3: Different block-level criteria at similar parameters. Taylor
+pruning removes solely the inner blocks, leading to insufficient
+reduction in MACs. Our method attains a favorable compromise between
+performance an inference speed. Results on MS-COCO 30K.
+</figcaption>
+</figure>
+<p>作者还发现删除中间块(Middle
+Block)对于SD模型的性能影响是微小的，如图4所示。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig4.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图4: Minor impact of removing the midstage from the U-Net. Results
+without retraining.
+</figcaption>
+</figure>
+<h1 id="剪枝后蒸馏训练">剪枝后蒸馏训练</h1>
+<p>为了恢复剪枝后模型的性能，BK-SDM采用蒸馏训练来对齐教师模型的输出。BK-SDM在feature-level和output-level上计算损失来训练学生模型。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig5.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图5: Distillation-based retraining. The block-removed U-Net is trained
+effectively through the guidance of the original U-Net.
+</figcaption>
+</figure>
+<p>具体来说，损失函数由三部分组成，分别是任务损失，特征损失和输出损失:</p>
+<p><span class="math display">\[ \begin{equation}
+L_{Task} = \mathbb{E}_{z,\epsilon,y,t} [||\epsilon - \epsilon_S(z_t, y,
+t)||_{2}^2] \\
+L_{FeatKD} =  \mathbb{E}_{z,\epsilon,y,t} [||\epsilon_T(z_t, y, t) -
+\epsilon_S(z_t, y, t)||_{2}^2] \\
+L_{OutKD} =  \mathbb{E}_{z,\epsilon,y,t} [\sum_{l} ||f_T^l(z_t, y, t) -
+f_S^l(z_t, y, t)||_{2}^2]
+\end{equation} \]</span></p>
+<p>其中<span class="math inline">\(f_T^l(o)\)</span>和<span
+class="math inline">\(f_S^l(o)\)</span>分别代表预先定义的第l层的输出特征图。最终，损失公式如下:</p>
+<p><span class="math display">\[ \begin{equation}
+L = L_{Task} + \lamda_{FeatKD} L_{FeatKD} + \lamda_{OutKD} L_{OutKD}
+\end{equation} \]</span></p>
+<p>其中<em>{FeatKD}和</em>{OutKD}是可设置的超参数。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/03/LD-Pruner/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,7 +327,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2025/03/LD-Pruner/" class="post-title-link" itemprop="url">LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights</a>
+          <a href="/next-blog/2025/03/LD-Pruner/" class="post-title-link" itemprop="url">论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights</a>
         </h2>
 
         <div class="post-meta-container">
@@ -188,9 +337,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-03-28 00:00:00 / Modified: 19:20:50" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+      <time title="Created: 2025-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-29 09:10:10" itemprop="dateModified" datetime="2025-03-29T09:10:10+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -207,6 +362,10 @@
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
         </span>
     </span>
 
@@ -527,7 +686,7 @@ y = f(\mathbf{g} \odot \hat{\mathbf{a}}+\mathbf{b})
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-28 19:19:17" itemprop="dateModified" datetime="2025-03-28T19:19:17+08:00">2025-03-28</time>
+      <time title="Modified: 2025-03-29 09:07:40" itemprop="dateModified" datetime="2025-03-29T09:07:40+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -579,7 +738,7 @@ MODELS”提出了LoRA低秩自适应微调技术。LoRA的策略是在Transform
 <figure>
 <img src="/next-blog/2025/03/fine-tuning/微调2.jpg" style="width:90%;">
 <figcaption style="font-size: 14px;">
-图1: Adapter
+图2: Lora
 </figcaption>
 </figure>
 <h2 id="提示微调p-tuning">提示微调（P-Tuning）</h2>
@@ -1597,180 +1756,6 @@ class="math inline">\(l_p\)</span>范数的权重更有可能被剪枝。</p>
 Models<i class="fa fa-external-link-alt"></i></span>是第一篇在扩散模型上探索结构化剪枝的文章，<span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvcGRmLzI0MDQuMTEwOTg=">LAPTOP-Diff: Layer Pruning and
 Normalized Distillation for Compressing Diffusion
 Models<i class="fa fa-external-link-alt"></i></span>探讨了在粗粒度水平下，SD上做层剪枝的可能。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2024/12/transformer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/next-blog/images/avatar.gif">
-      <meta itemprop="name" content="Jiawei Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张佳伟的博客">
-      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张佳伟的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2024/12/transformer/" class="post-title-link" itemprop="url">最高的山，最长的河？| Attention Is All You Need</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-17T00:00:00+08:00">2024-12-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-19 10:45:53" itemprop="dateModified" datetime="2025-03-19T10:45:53+08:00">2025-03-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">源码实现</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%9C%80%E9%AB%98%E7%9A%84%E5%B1%B1%EF%BC%8C%E6%9C%80%E9%95%BF%E7%9A%84%E6%B2%B3%EF%BC%9F/" itemprop="url" rel="index"><span itemprop="name">最高的山，最长的河？</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>NeurIPS2017</code></p>
-<figure>
-<img src="/next-blog/2024/12/transformer/1.png" alt="Transformer" style="width:100%;">
-<figcaption style="font-size: 14px;">
-图1: Transofrmer结构
-</figcaption>
-</figure>
-<p>从2017年开始，transformer就成为在深度学习领域的主导架构，时至今日，你可见的所有人工智能的底层实现，几乎都以其为基础，可以说，transformer开辟了一个时代。从最后的自然语言处理，到计算机视觉，再到如今的多模态应用，transformer不断拓展边界，某种程度上讲，真正意义上实现了“大一统帝国”。</p>
-<h1 id="输入">输入</h1>
-<p>在进入到编码器（Encoder）和解码器（Decoder）之前，输入需要被调整为合适的形状，只有搞清楚输入的含义，才能正确地将这种架构运用到目标领域的实践中。
-标准的输入（Inputs）的维度应该为（B，S），其中B指批次（Batch
-Size），S指序列长度（Sequence）。在自然语言中，一个样本（句子）会被预处理进行分词，经过分词等其他处理之后的句子长度应该为S，每个元素都是一个token。</p>
-<h2 id="嵌入层">嵌入层</h2>
-<p>接下来，我们希望对每个token进行编码，用向量而不是标量表示的好处是，线性空间对于语义相似的单词区分能力有限，例如，悲伤、痛苦这两个词尽管都是消极情绪，但它们在语义上仍有很多差别。用高维的向量空间将更好地区分和聚类相似的语义以及它们的区别。
-图1中嵌入层（Input
-Embedding）会将每一个输入的文本对应的分词映射为一个向量表示，具体来说，输入（B，S）将会经过Embedding层变为（B，S，H）,H表示嵌入维度。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Embedding</span>(nn.Module):</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_embeddings, embed_dim</span>):</span><br><span class="line">		<span class="built_in">super</span>(Embedding, <span class="variable language_">self</span>).__init__()</span><br><span class="line">		<span class="variable language_">self</span>.embed = nn.Embedding(num_embeddings, embed_dim)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">self</span>.embed(x)</span><br></pre></td></tr></table></figure>
-<h2 id="位置编码">位置编码</h2>
-<p>之后，在进入Encoder或Decoder之前，还要加上位置编码（Position
-Embedding）。顾名思义，位置编码用来告诉模型序列每个token之间的位置关系，对于文本来说，位置关系是至关重要的，“I
-love you”和“you love
-I（me）”表示了完全不同的意思，当然这个例子并不恰当，但是其阐明了单词在句子中的位置对句子的语义所造成的影响。</p>
-<p>最新的位置编码RoPE展示了强大的能力，除此之外，位置编码的变体仍然有很多。但是下面我介绍这篇论文里提出的一种位置编码——正余弦位置编码。</p>
-<p><span class="math display">\[ \begin{equation}
-\text{PE}_{i, 2k} = \sin\left( \frac{i}{10000^{2k/d}} \right)
-\end{equation} \]</span></p>
-<p><span class="math display">\[
-\begin{equation}
-\text{PE}_{i, 2k+1} = \cos\left( \frac{i}{10000^{(2k+1)/d}} \right)
-\end{equation}
-\]</span></p>
-<p>其中，i 是词在序列中的位置（从0开始），k
-是编码的维度索引（从0开始），d 是位置编码的总维度。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_1d_sincos_pos_embed</span>(<span class="params">self, embed_dim, seq_len</span>):</span><br><span class="line">    <span class="comment"># Compute the positional encodings once in log space.</span></span><br><span class="line">    pe = torch.zeros(seq_len, embed_dim).<span class="built_in">float</span>()</span><br><span class="line">    pe.require_grad = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    position = torch.arange(<span class="number">0</span>, seq_len).<span class="built_in">float</span>().unsqueeze(<span class="number">1</span>)</span><br><span class="line">    div_term = (torch.arange(<span class="number">0</span>, embed_dim, <span class="number">2</span>).<span class="built_in">float</span>()</span><br><span class="line">                * -(math.log(<span class="number">10000.0</span>) / embed_dim)).exp()</span><br><span class="line"></span><br><span class="line">    pe[:, <span class="number">0</span>::<span class="number">2</span>] = torch.sin(position * div_term)</span><br><span class="line">    pe[:, <span class="number">1</span>::<span class="number">2</span>] = torch.cos(position * div_term)</span><br><span class="line"></span><br><span class="line">    pe = pe.unsqueeze(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> pe</span><br></pre></td></tr></table></figure>
-<p>将位置编码（postion embedding）和经过嵌入层（Embedding
-Layer）的输入相加，以融合序列的位置信息。</p>
-<h1 id="编码器与解码器">编码器与解码器</h1>
-<p>编码器（Encoder）与解码器（Decoder）最大的区别在于解码器中多了一个交叉注意力（Cross
-Attention）的模块，编码器-解码器架构在后续的研究中，更多地被合并在一起或者称之为只使用编码器，下面对其中的模块进行分析，来看看它们到底是什么。</p>
-<h2 id="自注意力or交叉注意力-注意力计算">自注意力or交叉注意力？ |
-注意力计算</h2>
-<p>自注意力（Self-Attention）和交叉注意力（Cross
-Attention），在图一中被表示为多头注意力（Multi-Attention）。如何从本质上理解这两个概念？其实，对比这两个概念，我们看到，在输入注意力模块前，输入被分成三份，这也是论文中提到的查询（query），键（key），值（value）。注意到图1中，当查询来自解码器，而键和值来自编码器时，我们将这时的注意力称为交叉注意力。交叉注意力有助于查询向量从键、值中提取相关的信息（在翻译任务中，是指译文注意到原文中的信息，指导译文的合理生成）。</p>
-<p>所以，多头注意力其实是注意力内部的实现方式，它可以应用在自注意力或交叉注意力中。在文中，计算注意力的方式又被称之为缩放点积注意力。</p>
-<h3 id="缩放点积注意力与多头注意力">缩放点积注意力与多头注意力</h3>
-<figure>
-<img src="/next-blog/2024/12/transformer/2.png" alt="Transformer" style="width:90%;">
-<figcaption style="font-size: 14px;">
-图2: 缩放点积注意力与多头注意力
-</figcaption>
-</figure>
-<p>计算缩放点积注意力和多头注意力的流程如图2所示，图2（左）中，查询q先和键k进行矩阵乘法，之后进行缩放，通过掩码mask来指导查询应该关注的内容，在编码器Encoder中，主要屏蔽掉无意义的token（如padding），之后经过softmax，最后和值v做矩阵乘法。用公式表示如下：</p>
-<p><span class="math display">\[
-\begin{equation}
-Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
-\end{equation}
-\]</span></p>
-<p>图2（右）可以看到，多头注意力就是多个缩放点积注意力的结果进行拼接concat，下面给出了实现代码可供参考。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scaled_dot_attention</span>(<span class="params">q, k, v, mask=<span class="literal">None</span></span>):</span><br><span class="line">	<span class="comment"># Calculate the attention scores</span></span><br><span class="line">	dk = q.size(-<span class="number">1</span>)</span><br><span class="line">	scores = torch.matmul(q, k.transpose(-<span class="number">2</span>, -<span class="number">1</span>)) / math.sqrt(dk)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Apply the mask</span></span><br><span class="line">	<span class="keyword">if</span> mask <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">		scores = scores.masked_fill(mask == <span class="number">0</span>, -<span class="number">1e9</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Softmax</span></span><br><span class="line">	attention = F.softmax(scores, dim=-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Multiply by the value</span></span><br><span class="line">	output = torch.matmul(attention, v)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> output, attention</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MultiHeadAttention</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_model, n_heads, dropout</span>):</span><br><span class="line">		<span class="built_in">super</span>(MultiHeadAttention, <span class="variable language_">self</span>).__init__()</span><br><span class="line"></span><br><span class="line">		<span class="variable language_">self</span>.d_model = d_model</span><br><span class="line">		<span class="variable language_">self</span>.n_heads = n_heads</span><br><span class="line">		<span class="variable language_">self</span>.d_k = d_model // n_heads</span><br><span class="line"></span><br><span class="line">		<span class="variable language_">self</span>.W_Q = nn.Linear(d_model, d_model)</span><br><span class="line">		<span class="variable language_">self</span>.W_K = nn.Linear(d_model, d_model)</span><br><span class="line">		<span class="variable language_">self</span>.W_V = nn.Linear(d_model, d_model)</span><br><span class="line"></span><br><span class="line">		<span class="variable language_">self</span>.W_o = nn.Linear(d_model, d_model)</span><br><span class="line"></span><br><span class="line">		<span class="variable language_">self</span>.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, q, k, v, mask=<span class="literal">None</span></span>):</span><br><span class="line">		batch_size = q.size(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Linear layers</span></span><br><span class="line">		Q = <span class="variable language_">self</span>.W_Q(q)</span><br><span class="line">		K = <span class="variable language_">self</span>.W_K(k)</span><br><span class="line">		V = <span class="variable language_">self</span>.W_V(v)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Split the d_model into n_heads*d_k</span></span><br><span class="line">		Q = Q.view(batch_size, -<span class="number">1</span>, <span class="variable language_">self</span>.n_heads, <span class="variable language_">self</span>.d_k)</span><br><span class="line">		K = K.view(batch_size, -<span class="number">1</span>, <span class="variable language_">self</span>.n_heads, <span class="variable language_">self</span>.d_k)</span><br><span class="line">		V = V.view(batch_size, -<span class="number">1</span>, <span class="variable language_">self</span>.n_heads, <span class="variable language_">self</span>.d_k)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Transpose to get dimensions batch_size, n_heads, sequence_length, d_k</span></span><br><span class="line">		Q = Q.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">		K = K.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">		V = V.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Scaled dot-attention</span></span><br><span class="line">		scaled_dot, attention = scaled_dot_attention(Q, K, V, mask)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Concat</span></span><br><span class="line">		scaled_dot = scaled_dot.transpose(<span class="number">1</span>, <span class="number">2</span>).contiguous().view(batch_size, -<span class="number">1</span>, <span class="variable language_">self</span>.d_model)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># Linear layer</span></span><br><span class="line">		output = <span class="variable language_">self</span>.W_o(scaled_dot)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> output, attention</span><br></pre></td></tr></table></figure>
-<p>无论是自注意力还是交叉注意力，它们计算注意力的方式都是一致的，仅仅是输入的q、k、v和mask不同。</p>
-<p>更重要地，应该时刻关注哪一维度代表了token，注意力本质上是token之间的相互学习。例如，在视觉领域，通过patch之后的序列我们把其视为tokens，这些token之间相互注意代表了图像在不同patch之间的关注。</p>
-<h2 id="前馈网络">前馈网络</h2>
-<p>前馈网络（Feedforward
-Network）并不是什么很高级的东西，先展示代码，带你直观的理解前馈网络。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Mlp</span>(nn.Module):</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_model, d_ff, dropout</span>):</span><br><span class="line">		<span class="built_in">super</span>(Mlp, <span class="variable language_">self</span>).__init__()</span><br><span class="line"></span><br><span class="line">		<span class="variable language_">self</span>.fc1 = nn.Linear(d_model, d_ff)</span><br><span class="line">		<span class="variable language_">self</span>.fc2 = nn.Linear(d_ff, d_model)</span><br><span class="line">		<span class="variable language_">self</span>.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">		x = <span class="variable language_">self</span>.fc1(x)</span><br><span class="line">		x = F.relu(x)</span><br><span class="line">		x = <span class="variable language_">self</span>.dropout(x)</span><br><span class="line">		x = <span class="variable language_">self</span>.fc2(x)</span><br><span class="line">		<span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
-<p>本质上，前馈网络就是全连接层的组合，用来进一步提取序列中的信息。</p>
-<h2 id="残差连接与层归一化">残差连接与层归一化</h2>
-<p>在注意力模块以及前馈网络中中，包含了残差连接和层归一化。残差连接最早由He.等提出，成功解决了深度模型梯度消失和梯度爆炸的瓶颈，短路路径将输入直接加到输出，确保了即使是深层网络也能更好地保持信息流，这使得更大规模的网络构建成为可能。层归一化最初是为了解决深度神经网络训练中产生的“协变量偏移”问题，在最近几年不断改进，自适应层归一化被认为是一种更有效的方式来动态调整归一化参数，但与此同时也引入了较大的开销。</p>
-<h2 id="输出">输出</h2>
-<p>最终，经过解码器之后的输出，在通过一个全连接层，得到的输出用softmax函数转化为概率形式。在不同的任务中，头部的网络会有所调整来满足任务的需求。</p>
-<h1 id="未来-现在">未来？ | 现在！</h1>
-<p>注意力机制通过直接建立输入序列中任意两点之间的关联,解决了以往循环神经网络(Recurrent
-Neural Network,RNN)及其变种如长短期忆网络(LongShort-Term
-Memory,LSTM)的长距离依赖问题、串行计算的限制以及上下文信息的整合能力。在各种任务中,采用注意力机制的模型已经显示出比传统RNN模型更加优越的性能，现代神经网络架构已经越来越多地采用注意力机制。“近年来，注意力机制已被扩展到其他领域。例如，在计算机视觉中，VisionTransformer(ViT)通过将图像划分为多个区域块(patch，类似于文本的
-Token)的方式，成功将注意力机制应用到图像识别任务，大量的实验和工作表明ViT方法的性能能够达到甚至超越最先进的卷积神经网络(CNN)方法。在多模态学习领域，StabilityAI及其合作伙伴提出的稳定扩散模型采用了卷积神经网络(以
-U-Net
-为核心架构)并融合了注意力机制，在文本到图像的生成中取得了显著的效果。同时，OpenAI的研究员以及Sora的联合领袖
-William Peebles 等人开发的 Diffusion Transformer(DiT),将传统的 U-Net
-主干网络替换为
-Transformer架构，在图像生成领域展现了与稳定扩散模型相媲美的性能。这一突破性的研究不仅证明了
-Transformer在处理图像生成任务时的有效性，也推动了后续将 Transformer
-作为主干网络应用于文本到图像生成任务的深入探索。</p>
 
       
     </div>

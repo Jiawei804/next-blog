@@ -23,7 +23,7 @@
 
     <meta name="description" content="CVPR2024 潜在扩散模型(Latent Diffusion Models,LDMs)已经成为最强大的生成模型之一，其在有限计算资源的条件下展示了出众的结果。尽管如此，这些庞大的模型仍然难以在资源受限的环境下部署。LD-Pruner提出了一种严格的剪枝评估指标来对LDM进行结构化修剪。并在剪枝后使用知识蒸馏恢复模型性能，使其保持和教师模型同样的推理性能的同时大幅减少部署资源和推理时间。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights">
+<meta property="og:title" content="论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights">
 <meta property="og:url" content="https://jiaweijson.top/next-blog/2025/03/LD-Pruner/index.html">
 <meta property="og:site_name" content="张佳伟的博客">
 <meta property="og:description" content="CVPR2024 潜在扩散模型(Latent Diffusion Models,LDMs)已经成为最强大的生成模型之一，其在有限计算资源的条件下展示了出众的结果。尽管如此，这些庞大的模型仍然难以在资源受限的环境下部署。LD-Pruner提出了一种严格的剪枝评估指标来对LDM进行结构化修剪。并在剪枝后使用知识蒸馏恢复模型性能，使其保持和教师模型同样的推理性能的同时大幅减少部署资源和推理时间。">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/LD-Pruner/fig8.jpg">
 <meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/LD-Pruner/fig9.jpg">
 <meta property="article:published_time" content="2025-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-28T11:20:50.998Z">
+<meta property="article:modified_time" content="2025-03-29T01:10:10.964Z">
 <meta property="article:author" content="Jiawei Zhang">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="剪枝">
@@ -49,10 +49,10 @@
 <link rel="canonical" href="https://jiaweijson.top/next-blog/2025/03/LD-Pruner/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2025/03/LD-Pruner/","path":"2025/03/LD-Pruner/","title":"LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2025/03/LD-Pruner/","path":"2025/03/LD-Pruner/","title":"论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights | 张佳伟的博客</title>
+<title>论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights | 张佳伟的博客</title>
   
 
 
@@ -138,13 +138,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/next-blog/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -189,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights | 张佳伟的博客">
+      <meta itemprop="name" content="论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights | 张佳伟的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights
+          论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights
         </h1>
 
         <div class="post-meta-container">
@@ -204,9 +204,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-03-28 00:00:00 / Modified: 19:20:50" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+      <time title="Created: 2025-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-29 09:10:10" itemprop="dateModified" datetime="2025-03-29T09:10:10+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -223,6 +229,10 @@
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
         </span>
     </span>
 
@@ -369,6 +379,9 @@ The FID for the original model is 13.85.
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/next-blog/2025/03/BK-SDM/" rel="next" title="论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion">
+                  论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

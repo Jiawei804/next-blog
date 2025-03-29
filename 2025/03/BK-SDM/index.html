@@ -21,31 +21,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jiaweijson.top","root":"/next-blog/","images":"/next-blog/images","scheme":"Mist","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/next-blog/js/config.js"></script>
 
-    <meta name="description" content="学习笔记|大模型微调方法 最近在看一些模型微调的相关方法，阅读了不少论文，想做个小结，分享给需要的朋友。 直接微调 直接微调是指在不改变模型结构的基础上 ，加载预训练模型并在有限的数据集上微调训练，通常选取更小的学习率，通常的一些技术有全量微调，冻结部分参数等。  全量微调  全量微调是指每次更新模型的全部参数，这种方式在已有预训练权重的基础上进行，训练和预训练一样，但是由于预训练">
+    <meta name="description" content="稳定扩散模型通常由数十亿个参数组成，文本生成图像任务中在生成高质量图像时需要很高的计算要求。为了提高效率，最近的研究包括剪枝、蒸馏、量化的相关工作致力于此。BK-SDM证明了在稳定扩散模型上剪枝再蒸馏训练的巨大潜力。在蒸馏训练中，第一次在特征和输出水平上构建蒸馏损失函数进行训练，用更少的资源和成本训练出具有竞争力的T2I模型，且更易部署在边缘设备上。 手工剪枝 BK-SDM通过经验手动设计了三">
 <meta property="og:type" content="article">
-<meta property="og:title" content="即插即用(Plug and Play)|Efficient Fine-tuning Technology">
-<meta property="og:url" content="https://jiaweijson.top/next-blog/2025/03/fine-tuning/index.html">
+<meta property="og:title" content="论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion">
+<meta property="og:url" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/index.html">
 <meta property="og:site_name" content="张佳伟的博客">
-<meta property="og:description" content="学习笔记|大模型微调方法 最近在看一些模型微调的相关方法，阅读了不少论文，想做个小结，分享给需要的朋友。 直接微调 直接微调是指在不改变模型结构的基础上 ，加载预训练模型并在有限的数据集上微调训练，通常选取更小的学习率，通常的一些技术有全量微调，冻结部分参数等。  全量微调  全量微调是指每次更新模型的全部参数，这种方式在已有预训练权重的基础上进行，训练和预训练一样，但是由于预训练">
+<meta property="og:description" content="稳定扩散模型通常由数十亿个参数组成，文本生成图像任务中在生成高质量图像时需要很高的计算要求。为了提高效率，最近的研究包括剪枝、蒸馏、量化的相关工作致力于此。BK-SDM证明了在稳定扩散模型上剪枝再蒸馏训练的巨大潜力。在蒸馏训练中，第一次在特征和输出水平上构建蒸馏损失函数进行训练，用更少的资源和成本训练出具有竞争力的T2I模型，且更易部署在边缘设备上。 手工剪枝 BK-SDM通过经验手动设计了三">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/fine-tuning/%E5%BE%AE%E8%B0%831.jpg">
-<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/fine-tuning/%E5%BE%AE%E8%B0%832.jpg">
-<meta property="article:published_time" content="2025-03-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-29T01:07:40.712Z">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig1.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig2.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig3.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig4.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig5.jpg">
+<meta property="article:published_time" content="2025-03-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-29T02:58:08.049Z">
 <meta property="article:author" content="Jiawei Zhang">
-<meta property="article:tag" content="微调">
-<meta property="article:tag" content="高效训练">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="剪枝">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jiaweijson.top/next-blog/2025/03/fine-tuning/%E5%BE%AE%E8%B0%831.jpg">
+<meta name="twitter:image" content="https://jiaweijson.top/next-blog/2025/03/BK-SDM/fig1.jpg">
 
 
-<link rel="canonical" href="https://jiaweijson.top/next-blog/2025/03/fine-tuning/">
+<link rel="canonical" href="https://jiaweijson.top/next-blog/2025/03/BK-SDM/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2025/03/fine-tuning/","path":"2025/03/fine-tuning/","title":"即插即用(Plug and Play)|Efficient Fine-tuning Technology"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2025/03/BK-SDM/","path":"2025/03/BK-SDM/","title":"论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>即插即用(Plug and Play)|Efficient Fine-tuning Technology | 张佳伟的博客</title>
+<title>论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion | 张佳伟的博客</title>
   
 
 
@@ -118,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">学习笔记|大模型微调方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%BE%AE%E8%B0%83"><span class="nav-number">1.1.</span> <span class="nav-text">直接微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E5%BA%94%E6%80%A7%E5%BE%AE%E8%B0%83adapter"><span class="nav-number">1.2.</span> <span class="nav-text">适应性微调（Adapter）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E5%BE%AE%E8%B0%83p-tuning"><span class="nav-number">1.3.</span> <span class="nav-text">提示微调（P-Tuning）</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E5%B7%A5%E5%89%AA%E6%9E%9D"><span class="nav-number">1.</span> <span class="nav-text">手工剪枝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D%E5%90%8E%E8%92%B8%E9%A6%8F%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">剪枝后蒸馏训练</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +172,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/03/fine-tuning/">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/03/BK-SDM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/next-blog/images/avatar.gif">
@@ -182,12 +185,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="即插即用(Plug and Play)|Efficient Fine-tuning Technology | 张佳伟的博客">
+      <meta itemprop="name" content="论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion | 张佳伟的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          即插即用(Plug and Play)|Efficient Fine-tuning Technology
+          论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion
         </h1>
 
         <div class="post-meta-container">
@@ -197,15 +200,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2025-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-19T00:00:00+08:00">2025-03-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-29 09:07:40" itemprop="dateModified" datetime="2025-03-29T09:07:40+08:00">2025-03-29</time>
+      <time title="Created: 2025-03-29 00:00:00 / Modified: 10:58:08" itemprop="dateCreated datePublished" datetime="2025-03-29T00:00:00+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -213,7 +210,19 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E9%AB%98%E6%95%88%E8%AE%AD%E7%BB%83/" itemprop="url" rel="index"><span itemprop="name">高效训练</span></a>
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/" itemprop="url" rel="index"><span itemprop="name">剪枝</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" itemprop="url" rel="index"><span itemprop="name">知识蒸馏</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E5%89%AA%E6%9E%9D/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
         </span>
     </span>
 
@@ -226,51 +235,65 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="学习笔记大模型微调方法">学习笔记|大模型微调方法</h1>
-<p>最近在看一些模型微调的相关方法，阅读了不少论文，想做个小结，分享给需要的朋友。</p>
-<h2 id="直接微调">直接微调</h2>
-<p>直接微调是指在不改变模型结构的基础上
-，加载预训练模型并在有限的数据集上微调训练，通常选取更小的学习率，通常的一些技术有全量微调，冻结部分参数等。</p>
-<ul>
-<li>全量微调</li>
-</ul>
-<p>全量微调是指每次更新模型的全部参数，这种方式在已有预训练权重的基础上进行，训练和预训练一样，但是由于预训练模型已经学习到了一定的先验知识，所以会降低微调的训练成本，模型可以更快地收敛。</p>
-<ul>
-<li>部分微调（冻结）</li>
-</ul>
-<p>部分微调是指冻结模型的一部分层的参数不参与梯度更新的过程，这种方式在某些情况下被证明具有比全量微调更大的优势。除了简单的冻结层之外，不同的论文提出了不同的冻结策略，比如只微调偏置bias，或者只对归一化层等进行调整。</p>
-<h2 id="适应性微调adapter">适应性微调（Adapter）</h2>
-<p>Adapter最初由论文“Parameter-Efficient Transfer Learning for
-NLP”提出，策略是在Transformer的模型结构中在注意力层和前馈网络层之后加入两层全连接层和非线性激活函数，被称之为Adapter，第一层将d维向量映射到m维向量，第二层将m维向量映射回d维，以保持后续正确的残差连接，一个Adapter的总参数量为<span
-class="math inline">\((dm+m)+(md+d)\)</span>.如果你了解Transformer的实现，那么并不难知道Adapter加在哪里。</p>
+    <div class="post-body" itemprop="articleBody"><p>稳定扩散模型通常由数十亿个参数组成，文本生成图像任务中在生成高质量图像时需要很高的计算要求。为了提高效率，最近的研究包括剪枝、蒸馏、量化的相关工作致力于此。BK-SDM证明了在稳定扩散模型上剪枝再蒸馏训练的巨大潜力。在蒸馏训练中，第一次在特征和输出水平上构建蒸馏损失函数进行训练，用更少的资源和成本训练出具有竞争力的T2I模型，且更易部署在边缘设备上。</p>
+<h1 id="手工剪枝">手工剪枝</h1>
+<p>BK-SDM通过经验手动设计了三种型号的剪枝后SDM。具体结构如图1所示。</p>
 <figure>
-<img src="/next-blog/2025/03/fine-tuning/微调1.jpg" style="width:90%;">
+<img src="/next-blog/2025/03/BK-SDM/fig1.jpg" alt="Transformer" style="width:90%;">
 <figcaption style="font-size: 14px;">
-图1: Adapter
+图1: Block removal from the denoising U-Net.
 </figcaption>
 </figure>
-<hr />
-<p>之后，借鉴Adapter的方法，论文“LORA: LOW-RANK ADAPTATION OF LARGE
-LANGUAGE
-MODELS”提出了LoRA低秩自适应微调技术。LoRA的策略是在Transformer的自主力层中，对q、v（注意力层中计算的三个向量分别是q、k、v）加入额外的类似于漏斗的全连接网络，与Adapter相似，第一个全连接层将维度缩小到r，第二个全连接层将维度恢复，之后将计算的q值与LORA相加。更精炼的概括是，LoRA在自注意力子层之间的q和v结果中添加了两个低秩矩阵进行微调。在研究中，LORA通常并不归类于Adapter中。</p>
+<p>在图2的相关性分析中，作者认为CLIP分数无法正确反映层重要性，(a)中删除较多的Attn层而CLIP分数并没有显著下降，CLIP评分修剪敏感性的重要性标准会导致注意力块的过度修剪，最终结果不如手工设计的剪枝网络性能，结果对比展示在图3中。</p>
 <figure>
-<img src="/next-blog/2025/03/fine-tuning/微调2.jpg" style="width:90%;">
+<img src="/next-blog/2025/03/BK-SDM/fig2.jpg" alt="Transformer" style="width:90%;">
 <figcaption style="font-size: 14px;">
-图2: Lora
+图2: Importance of (a) each block and (b) each group of paired/triplet
+blocks.
 </figcaption>
 </figure>
-<h2 id="提示微调p-tuning">提示微调（P-Tuning）</h2>
-<p>与P-Tuning相关的工作：</p>
-<ul>
-<li><p>论文 “The Power of Scale for Parameter-Efficient Prompt
-Tuning"，Prompt Tuning的首创。</p></li>
-<li><p>论文 ”Li and Liang, "Prefix-Tuning: Optimizing Continuous Prompts
-for Generation"，提出前缀调整Prefix-Tuning。</p></li>
-<li><p>论文“P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning
-Universally Across Scales and Tasks”在二者之上改进提出了P-Tuning
-v2。</p></li>
-</ul>
-<p>以上是目前主流的三大类微调方法，每种类别下又有这各式各样不同的小设计，尽管很多方法最先出自NLP领域，但随着技术的不断发展，CV与NLP领域的交叉融合趋势不断演进，期待未来更多高效的微调方法的出现。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig3.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图3: Different block-level criteria at similar parameters. Taylor
+pruning removes solely the inner blocks, leading to insufficient
+reduction in MACs. Our method attains a favorable compromise between
+performance an inference speed. Results on MS-COCO 30K.
+</figcaption>
+</figure>
+<p>作者还发现删除中间块(Middle
+Block)对于SD模型的性能影响是微小的，如图4所示。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig4.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图4: Minor impact of removing the midstage from the U-Net. Results
+without retraining.
+</figcaption>
+</figure>
+<h1 id="剪枝后蒸馏训练">剪枝后蒸馏训练</h1>
+<p>为了恢复剪枝后模型的性能，BK-SDM采用蒸馏训练来对齐教师模型的输出。BK-SDM在feature-level和output-level上计算损失来训练学生模型。</p>
+<figure>
+<img src="/next-blog/2025/03/BK-SDM/fig5.jpg" alt="Transformer" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图5: Distillation-based retraining. The block-removed U-Net is trained
+effectively through the guidance of the original U-Net.
+</figcaption>
+</figure>
+<p>具体来说，损失函数由三部分组成，分别是任务损失，特征损失和输出损失:</p>
+<p><span class="math display">\[ \begin{equation}
+L_{Task} = \mathbb{E}_{z,\epsilon,y,t} [||\epsilon - \epsilon_S(z_t, y,
+t)||_{2}^2] \\
+L_{FeatKD} =  \mathbb{E}_{z,\epsilon,y,t} [||\epsilon_T(z_t, y, t) -
+\epsilon_S(z_t, y, t)||_{2}^2] \\
+L_{OutKD} =  \mathbb{E}_{z,\epsilon,y,t} [\sum_{l} ||f_T^l(z_t, y, t) -
+f_S^l(z_t, y, t)||_{2}^2]
+\end{equation} \]</span></p>
+<p>其中<span class="math inline">\(f_T^l(o)\)</span>和<span
+class="math inline">\(f_S^l(o)\)</span>分别代表预先定义的第l层的输出特征图。最终，损失公式如下:</p>
+<p><span class="math display">\[ \begin{equation}
+L = L_{Task} + \lamda_{FeatKD} L_{FeatKD} + \lamda_{OutKD} L_{OutKD}
+\end{equation} \]</span></p>
+<p>其中<em>{FeatKD}和</em>{OutKD}是可设置的超参数。</p>
 
     </div>
 
@@ -280,22 +303,19 @@ v2。</p></li>
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/next-blog/tags/%E5%BE%AE%E8%B0%83/" rel="tag"># 微调</a>
-              <a href="/next-blog/tags/%E9%AB%98%E6%95%88%E8%AE%AD%E7%BB%83/" rel="tag"># 高效训练</a>
+              <a href="/next-blog/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+              <a href="/next-blog/tags/%E5%89%AA%E6%9E%9D/" rel="tag"># 剪枝</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/next-blog/2025/03/one-step-vg/" rel="prev" title="Diffusion Adversarial Post-Training for One-Step Video Generation">
-                  <i class="fa fa-angle-left"></i> Diffusion Adversarial Post-Training for One-Step Video Generation
+                <a href="/next-blog/2025/03/LD-Pruner/" rel="prev" title="论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights">
+                  <i class="fa fa-angle-left"></i> 论文笔记|LD-Pruner:Efficient Pruning of Latent Diffusion Models using Task-Agnostic Insights
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/next-blog/2025/03/Normalization/" rel="next" title="模型优化|归一化笔记">
-                  模型优化|归一化笔记 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
