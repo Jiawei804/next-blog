@@ -190,7 +190,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-03-29 00:00:00 / Modified: 11:05:58" itemprop="dateCreated datePublished" datetime="2025-03-29T00:00:00+08:00">2025-03-29</time>
+      <time title="Created: 2025-03-29 00:00:00 / Modified: 11:07:56" itemprop="dateCreated datePublished" datetime="2025-03-29T00:00:00+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -270,14 +270,16 @@ effectively through the guidance of the original U-Net.
 </figure>
 <p>具体来说，损失函数由三部分组成，分别是任务损失，特征损失和输出损失:</p>
 <p><span class="math display">\[ \begin{equation}
-\begin{aligned}
-L_{Task} &amp;= \mathbb{E}_{z,\epsilon,y,t}[||\epsilon - \epsilon_S(z_t,
-y, t)||_{2}^2]  \\
-L_{FeatKD} &amp;= \mathbb{E}_{z,\epsilon,y,t}[||\epsilon_T(z_t, y, t) -
-\epsilon_S(z_t, y, t)||_{2}^2] \\
-L_{OutKD} &amp;= \mathbb{E}_{z,\epsilon,y,t}[\sum_{l} ||f_T^l(z_t, y, t)
-- f_S^l(z_t, y, t)||_{2}^2]
-\end{aligned}
+L_{Task} = \mathbb{E}_{z,\epsilon,y,t}[||\epsilon - \epsilon_S(z_t, y,
+t)||_{2}^2]
+\end{equation} \]</span></p>
+<p><span class="math display">\[ \begin{equation}
+L_{FeatKD} = \mathbb{E}_{z,\epsilon,y,t}[||\epsilon_T(z_t, y, t) -
+\epsilon_S(z_t, y, t)||_{2}^2]
+\end{equation} \]</span></p>
+<p><span class="math display">\[ \begin{equation}
+L_{OutKD} = \mathbb{E}_{z,\epsilon,y,t}[\sum_{l} ||f_T^l(z_t, y, t) -
+f_S^l(z_t, y, t)||_{2}^2]
 \end{equation} \]</span></p>
 <p>其中<span class="math inline">\(f_T^l(o)\)</span>和<span
 class="math inline">\(f_S^l(o)\)</span>分别代表预先定义的第l层的输出特征图。最终，损失公式如下:</p>
