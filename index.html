@@ -196,7 +196,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-08-25 09:13:04" itemprop="dateModified" datetime="2025-08-25T09:13:04+08:00">2025-08-25</time>
+      <time title="Modified: 2025-08-25 09:20:48" itemprop="dateModified" datetime="2025-08-25T09:20:48+08:00">2025-08-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -261,8 +261,8 @@ fixed mask</h2>
 <h2 id="syncnet-supervision">SyncNet supervision</h2>
 <p>SyncNet需要输入图像进行监督，而LDMs每次预测的是噪声，因此作者使用一步采样的结果作为图像输入：</p>
 <p><span class="math display">\[
-\hat(z_0) = (z_t - \sqrt{1-\bar{\alpha}}\epsilon_{\theta}(z_t)) /
-\sqrt{\bar{\alpha_t}}
+(\hat{z}_0) = (z_t - \sqrt{1-\bar{\alpha}}\epsilon_{\theta}(z_t)) /
+\sqrt{\bar{\alpha}_t}
 \]</span></p>
 <p>作者讨论了SyncNet的两种空间设计，在后续的分析中证明了像素空间下具有更快的收敛速度。作者认为可能是在VAE编码过程中唇区信息丢失造成的。</p>
 <figure>
