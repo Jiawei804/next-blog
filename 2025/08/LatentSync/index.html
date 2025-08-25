@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/next-blog/images/icon-Z.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/next-blog/images/icon-Z.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/next-blog/images/icon-Z.png">
+  <link rel="mask-icon" href="/next-blog/images/icon-Z.png" color="#222">
+  <meta name="google-site-verification" content="3PwDTPQIKaVTFS5tNsg1hmMKyjurAzUV2pCJrYxOzIU">
+  <meta name="msvalidate.01" content="E20B3A9AED3ED457582A3F96E9CEF42C">
+
+<link rel="stylesheet" href="/next-blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jiaweijson.top","root":"/next-blog/","images":"/next-blog/images","scheme":"Mist","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/next-blog/js/config.js"></script>
+
+    <meta name="description" content="端到端音频条件潜在扩散模型(ldm)已被广泛应用于音频驱动的人像动画，证明了它们在生成逼真的高分辨率谈话视频方面的有效性。当前的口型同步（lip-sync）任务中口型同步的精度并不理想。本文指出了其根本性的问题：捷径学习（shortcut Learning problem）——模型经常学习视觉-视觉（visual-visual）的捷径而忽略关键的试听相关性（audio-visual corr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision">
+<meta property="og:url" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/index.html">
+<meta property="og:site_name" content="张佳伟的博客">
+<meta property="og:description" content="端到端音频条件潜在扩散模型(ldm)已被广泛应用于音频驱动的人像动画，证明了它们在生成逼真的高分辨率谈话视频方面的有效性。当前的口型同步（lip-sync）任务中口型同步的精度并不理想。本文指出了其根本性的问题：捷径学习（shortcut Learning problem）——模型经常学习视觉-视觉（visual-visual）的捷径而忽略关键的试听相关性（audio-visual corr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/1.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/2.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/3.jpg">
+<meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/4.jpg">
+<meta property="article:published_time" content="2025-08-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-25T01:13:04.176Z">
+<meta property="article:author" content="Jiawei Zhang">
+<meta property="article:tag" content="音频驱动">
+<meta property="article:tag" content="多模态，口型同步">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiaweijson.top/next-blog/2025/08/LatentSync/1.jpg">
+
+
+<link rel="canonical" href="https://jiaweijson.top/next-blog/2025/08/LatentSync/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://jiaweijson.top/next-blog/2025/08/LatentSync/","path":"2025/08/LatentSync/","title":"论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision | 张佳伟的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/next-blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/next-blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">张佳伟的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/next-blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/next-blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/next-blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/next-blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/next-blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/next-blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#latentsync-framework"><span class="nav-number">1.</span> <span class="nav-text">LatentSync Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#audio-layers"><span class="nav-number">1.1.</span> <span class="nav-text">Audio layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#affine-transformation-and-fixed-mask"><span class="nav-number">1.2.</span> <span class="nav-text">Affine transformation and
+fixed mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#syncnet-supervision"><span class="nav-number">1.3.</span> <span class="nav-text">SyncNet supervision</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E7%AD%96%E7%95%A5"><span class="nav-number">2.</span> <span class="nav-text">两阶段训练策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trepatemporal-representation-alignment"><span class="nav-number">3.</span> <span class="nav-text">TREPA（Temporal
+Representation Alignment）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#syncnet%E6%94%B6%E6%95%9B%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">SyncNet收敛性分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">实验结果</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiawei Zhang</p>
+  <div class="site-description" itemprop="description">I love and enjoy the moments that take our breath away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/next-blog/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/next-blog/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/next-blog/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/08/LatentSync/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-24 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-24T00:00:00+08:00">2025-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-25 09:13:04" itemprop="dateModified" datetime="2025-08-25T09:13:04+08:00">2025-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%8C%E5%A4%9A%E6%A8%A1%E6%80%81/" itemprop="url" rel="index"><span itemprop="name">论文笔记，多模态</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>端到端音频条件潜在扩散模型(ldm)已被广泛应用于音频驱动的人像动画，证明了它们在生成逼真的高分辨率谈话视频方面的有效性。当前的口型同步（lip-sync）任务中口型同步的精度并不理想。本文指出了其根本性的问题：捷径学习（shortcut
+Learning
+problem）——模型经常学习视觉-视觉（visual-visual）的捷径而忽略关键的试听相关性（audio-visual
+correlation）。作者将SyncNet 集成到audio-conditioned
+LDMs中监督强制学习试听相关性。作者认为SyncNet对对口型精度的影响至关重要，进行了全面的实证分析来确定影响SyncNet收敛的关键因素。</p>
+<p>本文主要贡献：</p>
+<p>1）提出了LatentSync——第一个使用音频条件在高分辨率视频上实现端到端逼真口型同步的方法，提出了TREPA（Temporal
+Representation Alignment）增强视频的时间一致性.</p>
+<p>2）发现了捷进学习问题，探索了将SyncNet 集成到audio-conditioned
+LDMs中监督强制学习试听相关性的解决方法。</p>
+<p>3）进行了全面的实证研究分析SyncNet收敛的关键因素，提出了稳定收敛的StableSyncNet。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/1.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图1: The overview of LatentSync framework.
+</figcaption>
+</figure>
+<h1 id="latentsync-framework">LatentSync Framework</h1>
+<p>LatentSync架构如图1所示。U-Net的大部分参数直接来自预训练模型SD
+1.5。为了适配新任务，作者更换了输入层（conv_in），以及加入的交叉注意力层（cross-attn）采用了随机初始化。U-Net的输入包含13个通道，分别是mask,
+mask frames, reference frames以及Noised latents。</p>
+<h2 id="audio-layers">Audio layers</h2>
+<p>音频信息通过Whisper
+Encoder提取音频输入得到音频嵌入。通常口型动作收到当前音频以及周围音频的共同影响，作者将音频输入特征<span
+class="math inline">\(A^{(f)}\)</span>定义为：<span
+class="math inline">\(A^{(f)} =
+{A^{(f)-m},...,A^{(f)},...A^{(f)+m}}\)</span>，其中f表示第f帧，m是一侧周围音频特征的数量。最后通过交叉注意力层合并到U-Net中。</p>
+<h2 id="affine-transformation-and-fixed-mask">Affine transformation and
+fixed mask</h2>
+<p>作者使用仿射变换将人脸正面化，这有利于模型学习面部特征。同时在掩膜的选取上，作者采用覆盖几乎整个脸部的掩膜大小，希望最小化模型对捷径的依赖。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/2.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图2: The illustration of affine transformation and fixed mask.
+</figcaption>
+</figure>
+<h2 id="syncnet-supervision">SyncNet supervision</h2>
+<p>SyncNet需要输入图像进行监督，而LDMs每次预测的是噪声，因此作者使用一步采样的结果作为图像输入：</p>
+<p><span class="math display">\[
+\hat(z_0) = (z_t - \sqrt{1-\bar{\alpha}}\epsilon_{\theta}(z_t)) /
+\sqrt{\bar{\alpha_t}}
+\]</span></p>
+<p>作者讨论了SyncNet的两种空间设计，在后续的分析中证明了像素空间下具有更快的收敛速度。作者认为可能是在VAE编码过程中唇区信息丢失造成的。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/3.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图3: Two methods to add SyncNet supervision to latent diffusion models.
+</figcaption>
+</figure>
+<h1 id="两阶段训练策略">两阶段训练策略</h1>
+<p>第一阶只训练U-Net学习从参考图像中提取视觉特征来修复图像，训练U-Net的全部参数，但不加入时间层：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{simple}}
+= \mathbb{E}_{x, A, \epsilon \sim \mathcal{N}(0,1), t}
+\left[\left\lVert \epsilon - \epsilon_\theta \big( z_t, t,
+\tau_\theta(A) \big) \right\rVert_2^2 \right]
+\]</span> 其中A是输入音频，<span
+class="math inline">\(\epsilon_{\theta}(z_t, t,
+\tau_{\theta(A)})\)</span>是预测噪声，_{(A)}是音频特征提取器。</p>
+<p>在训练的第二阶段，作者只训练时间层（temporal layer）和音频层（audio
+layer），而冻结 U-Net 的其他参数。假设有 16 帧解码后的视频片段 <span
+class="math inline">\(\mathcal{D}(\hat{z}_0)_{f:f+16}\)</span>
+以及对应的音频序列 <span class="math inline">\(a_{f:f+16}\)</span>，则
+同步网络损失（SyncNet Loss） 定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{sync}}
+= \mathbb{E}_{x, a, \epsilon,
+t}\Big[\text{SyncNet}\big(\mathcal{D}(\hat{z}_0)_{f:f+16}, \,
+a_{f:f+16}\big)\Big]
+\]</span> 其中 <span class="math inline">\(\mathcal{D}\)</span> 表示 VAE
+解码器。由于唇形同步（lipsync）任务需要生成细节区域（如嘴唇、牙齿、胡须等），为了提升生成图像的视觉质量，作者引入
+LPIPS 损失：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{lpips}}
+= \mathbb{E}_{x, \epsilon, t}
+\Big[\big\lVert \mathcal{V}_l(\mathcal{D}(\hat{z}_0)_f) -
+\mathcal{V}_l(x_f) \big\rVert_2^2 \Big]
+\]</span> 其中 <span class="math inline">\(\mathcal{V}_l(\cdot)\)</span>
+表示从 预训练的 VGG 网络第 <span class="math inline">\(l\)</span>
+层提取的特征。</p>
+<p>此外，为了增强时间一致性，还引入了提出的 TREPA 损失。
+最终，第二阶段的总损失函数定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{total}}
+= \lambda_1 \mathcal{L}_{\text{simple}}
++ \lambda_2 \mathcal{L}_{\text{sync}}
++ \lambda_3 \mathcal{L}_{\text{lpips}}
++ \lambda_4 \mathcal{L}_{\text{trepa}}
+\]</span></p>
+<h1 id="trepatemporal-representation-alignment">TREPA（Temporal
+Representation Alignment）</h1>
+<p>考虑到一半的损失只能改善生成图像的内容质量而并不关注时序一致性，作者使用自监督视频模型VideoMAE-v2提取时序表征。设
+<span class="math inline">\(\mathcal{T}\)</span>
+是一个自监督视频模型编码器（self-supervised video encoder），其输出为在
+projection head 之前的嵌入表示。TREPA 损失定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{trepa}}
+= \mathbb{E}_{x, \epsilon, t}
+\Big[
+\big\lVert \mathcal{T}(\mathcal{D}(\hat{z}_0)_{f:f+16})
+- \mathcal{T}(x_{f:f+16}) \big\rVert_2^2
+\Big]
+\]</span>
+其中，采用均方误差（MSE）来衡量生成视频片段与真实视频片段的时间表示（temporal
+representations）之间的差异。在计算 MSE 之前，特征表示会先经过 <span
+class="math inline">\(\ell_2\)</span> 归一化。</p>
+<h1 id="syncnet收敛性分析">SyncNet收敛性分析</h1>
+<p>这个部分探索了为什么SyncNet训练不收敛的原因，在我看来更像是寻找合适超参数的过程。作者最终确定batch
+size大小为1024，Embedding dimension为2048，number of
+frames为16。除此之外，作者介绍了SyncNet的结构和数据处理的一些过程，在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2J5dGVkYW5jZS9MYXRlbnRTeW5j">仓库<i class="fa fa-external-link-alt"></i></span>中可以看到详细的数据处理管道。</p>
+<h1 id="实验结果">实验结果</h1>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/4.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+表1: Quantitative comparisons on HDTF and VoxCeleb2.
+</figcaption>
+</figure>
+<p>表1结果表明作者所提出的方法在HDTF数据集上取得的领先性能。更多的实验结果和消融分析请参考原文。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/next-blog/tags/%E9%9F%B3%E9%A2%91%E9%A9%B1%E5%8A%A8/" rel="tag"># 音频驱动</a>
+              <a href="/next-blog/tags/%E5%A4%9A%E6%A8%A1%E6%80%81%EF%BC%8C%E5%8F%A3%E5%9E%8B%E5%90%8C%E6%AD%A5/" rel="tag"># 多模态，口型同步</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/next-blog/2025/03/BK-SDM/" rel="prev" title="论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion">
+                  <i class="fa fa-angle-left"></i> 论文笔记|BK-SDM:A Lightweight, Fast, and Cheap Versionof Stable Diffusion
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jiawei Zhang</span>
+  </div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/next-blog/js/comments.js"></script><script src="/next-blog/js/utils.js"></script><script src="/next-blog/js/motion.js"></script><script src="/next-blog/js/sidebar.js"></script><script src="/next-blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/next-blog/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

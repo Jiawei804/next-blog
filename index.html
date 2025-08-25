@@ -123,18 +123,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/next-blog/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/next-blog/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -151,6 +151,212 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/08/LatentSync/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/08/LatentSync/" class="post-title-link" itemprop="url">论文笔记|LatentSync:Taming Audio-Conditioned Latent Diffusion Models for Lip Sync with SyncNet Supervision</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-24 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-24T00:00:00+08:00">2025-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-25 09:13:04" itemprop="dateModified" datetime="2025-08-25T09:13:04+08:00">2025-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%8C%E5%A4%9A%E6%A8%A1%E6%80%81/" itemprop="url" rel="index"><span itemprop="name">论文笔记，多模态</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>端到端音频条件潜在扩散模型(ldm)已被广泛应用于音频驱动的人像动画，证明了它们在生成逼真的高分辨率谈话视频方面的有效性。当前的口型同步（lip-sync）任务中口型同步的精度并不理想。本文指出了其根本性的问题：捷径学习（shortcut
+Learning
+problem）——模型经常学习视觉-视觉（visual-visual）的捷径而忽略关键的试听相关性（audio-visual
+correlation）。作者将SyncNet 集成到audio-conditioned
+LDMs中监督强制学习试听相关性。作者认为SyncNet对对口型精度的影响至关重要，进行了全面的实证分析来确定影响SyncNet收敛的关键因素。</p>
+<p>本文主要贡献：</p>
+<p>1）提出了LatentSync——第一个使用音频条件在高分辨率视频上实现端到端逼真口型同步的方法，提出了TREPA（Temporal
+Representation Alignment）增强视频的时间一致性.</p>
+<p>2）发现了捷进学习问题，探索了将SyncNet 集成到audio-conditioned
+LDMs中监督强制学习试听相关性的解决方法。</p>
+<p>3）进行了全面的实证研究分析SyncNet收敛的关键因素，提出了稳定收敛的StableSyncNet。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/1.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图1: The overview of LatentSync framework.
+</figcaption>
+</figure>
+<h1 id="latentsync-framework">LatentSync Framework</h1>
+<p>LatentSync架构如图1所示。U-Net的大部分参数直接来自预训练模型SD
+1.5。为了适配新任务，作者更换了输入层（conv_in），以及加入的交叉注意力层（cross-attn）采用了随机初始化。U-Net的输入包含13个通道，分别是mask,
+mask frames, reference frames以及Noised latents。</p>
+<h2 id="audio-layers">Audio layers</h2>
+<p>音频信息通过Whisper
+Encoder提取音频输入得到音频嵌入。通常口型动作收到当前音频以及周围音频的共同影响，作者将音频输入特征<span
+class="math inline">\(A^{(f)}\)</span>定义为：<span
+class="math inline">\(A^{(f)} =
+{A^{(f)-m},...,A^{(f)},...A^{(f)+m}}\)</span>，其中f表示第f帧，m是一侧周围音频特征的数量。最后通过交叉注意力层合并到U-Net中。</p>
+<h2 id="affine-transformation-and-fixed-mask">Affine transformation and
+fixed mask</h2>
+<p>作者使用仿射变换将人脸正面化，这有利于模型学习面部特征。同时在掩膜的选取上，作者采用覆盖几乎整个脸部的掩膜大小，希望最小化模型对捷径的依赖。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/2.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图2: The illustration of affine transformation and fixed mask.
+</figcaption>
+</figure>
+<h2 id="syncnet-supervision">SyncNet supervision</h2>
+<p>SyncNet需要输入图像进行监督，而LDMs每次预测的是噪声，因此作者使用一步采样的结果作为图像输入：</p>
+<p><span class="math display">\[
+\hat(z_0) = (z_t - \sqrt{1-\bar{\alpha}}\epsilon_{\theta}(z_t)) /
+\sqrt{\bar{\alpha_t}}
+\]</span></p>
+<p>作者讨论了SyncNet的两种空间设计，在后续的分析中证明了像素空间下具有更快的收敛速度。作者认为可能是在VAE编码过程中唇区信息丢失造成的。</p>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/3.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+图3: Two methods to add SyncNet supervision to latent diffusion models.
+</figcaption>
+</figure>
+<h1 id="两阶段训练策略">两阶段训练策略</h1>
+<p>第一阶只训练U-Net学习从参考图像中提取视觉特征来修复图像，训练U-Net的全部参数，但不加入时间层：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{simple}}
+= \mathbb{E}_{x, A, \epsilon \sim \mathcal{N}(0,1), t}
+\left[\left\lVert \epsilon - \epsilon_\theta \big( z_t, t,
+\tau_\theta(A) \big) \right\rVert_2^2 \right]
+\]</span> 其中A是输入音频，<span
+class="math inline">\(\epsilon_{\theta}(z_t, t,
+\tau_{\theta(A)})\)</span>是预测噪声，_{(A)}是音频特征提取器。</p>
+<p>在训练的第二阶段，作者只训练时间层（temporal layer）和音频层（audio
+layer），而冻结 U-Net 的其他参数。假设有 16 帧解码后的视频片段 <span
+class="math inline">\(\mathcal{D}(\hat{z}_0)_{f:f+16}\)</span>
+以及对应的音频序列 <span class="math inline">\(a_{f:f+16}\)</span>，则
+同步网络损失（SyncNet Loss） 定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{sync}}
+= \mathbb{E}_{x, a, \epsilon,
+t}\Big[\text{SyncNet}\big(\mathcal{D}(\hat{z}_0)_{f:f+16}, \,
+a_{f:f+16}\big)\Big]
+\]</span> 其中 <span class="math inline">\(\mathcal{D}\)</span> 表示 VAE
+解码器。由于唇形同步（lipsync）任务需要生成细节区域（如嘴唇、牙齿、胡须等），为了提升生成图像的视觉质量，作者引入
+LPIPS 损失：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{lpips}}
+= \mathbb{E}_{x, \epsilon, t}
+\Big[\big\lVert \mathcal{V}_l(\mathcal{D}(\hat{z}_0)_f) -
+\mathcal{V}_l(x_f) \big\rVert_2^2 \Big]
+\]</span> 其中 <span class="math inline">\(\mathcal{V}_l(\cdot)\)</span>
+表示从 预训练的 VGG 网络第 <span class="math inline">\(l\)</span>
+层提取的特征。</p>
+<p>此外，为了增强时间一致性，还引入了提出的 TREPA 损失。
+最终，第二阶段的总损失函数定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{total}}
+= \lambda_1 \mathcal{L}_{\text{simple}}
++ \lambda_2 \mathcal{L}_{\text{sync}}
++ \lambda_3 \mathcal{L}_{\text{lpips}}
++ \lambda_4 \mathcal{L}_{\text{trepa}}
+\]</span></p>
+<h1 id="trepatemporal-representation-alignment">TREPA（Temporal
+Representation Alignment）</h1>
+<p>考虑到一半的损失只能改善生成图像的内容质量而并不关注时序一致性，作者使用自监督视频模型VideoMAE-v2提取时序表征。设
+<span class="math inline">\(\mathcal{T}\)</span>
+是一个自监督视频模型编码器（self-supervised video encoder），其输出为在
+projection head 之前的嵌入表示。TREPA 损失定义为：</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{trepa}}
+= \mathbb{E}_{x, \epsilon, t}
+\Big[
+\big\lVert \mathcal{T}(\mathcal{D}(\hat{z}_0)_{f:f+16})
+- \mathcal{T}(x_{f:f+16}) \big\rVert_2^2
+\Big]
+\]</span>
+其中，采用均方误差（MSE）来衡量生成视频片段与真实视频片段的时间表示（temporal
+representations）之间的差异。在计算 MSE 之前，特征表示会先经过 <span
+class="math inline">\(\ell_2\)</span> 归一化。</p>
+<h1 id="syncnet收敛性分析">SyncNet收敛性分析</h1>
+<p>这个部分探索了为什么SyncNet训练不收敛的原因，在我看来更像是寻找合适超参数的过程。作者最终确定batch
+size大小为1024，Embedding dimension为2048，number of
+frames为16。除此之外，作者介绍了SyncNet的结构和数据处理的一些过程，在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2J5dGVkYW5jZS9MYXRlbnRTeW5j">仓库<i class="fa fa-external-link-alt"></i></span>中可以看到详细的数据处理管道。</p>
+<h1 id="实验结果">实验结果</h1>
+<figure>
+<img src="/next-blog/2025/08/LatentSync/4.jpg" alt="LatentSync" style="width:90%;">
+<figcaption style="font-size: 14px;">
+表1: Quantitative comparisons on HDTF and VoxCeleb2.
+</figcaption>
+</figure>
+<p>表1结果表明作者所提出的方法在HDTF数据集上取得的领先性能。更多的实验结果和消融分析请参考原文。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1535,231 +1741,6 @@ y, t} \alpha^i \left\| f_T^i(z_t, y, t) - f_S^i(z_t, y, t) \right\|_2^2,
 次迭代中，使用原始特征蒸馏或标准化特征蒸馏的每个模块的非标准化特征损失项
 </figcaption>
 </figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2024/12/pruning_survey/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/next-blog/images/avatar.gif">
-      <meta itemprop="name" content="Jiawei Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张佳伟的博客">
-      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张佳伟的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2024/12/pruning_survey/" class="post-title-link" itemprop="url">高效压缩 | 深度神经网络剪枝</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-24 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-24T00:00:00+08:00">2024-12-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-01-03 12:59:07" itemprop="dateModified" datetime="2025-01-03T12:59:07+08:00">2025-01-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">深度神经网络</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>越来越多的大型视觉模型在图像和视频生成领域展现了强大的能力，与此同时，高昂的训练成本和推理成本阻碍了这些基础模型的应用，如何有效的压缩基础模型，使其在资源受限的场景（例如，自动驾驶、手机等能源和带宽限制的设备，需要快速响应和紧凑的内存占用。）中实现高效的模型推理，是目前重要的研究课题。这篇文章我想聊一聊模型压缩技术之一——剪枝。</p>
-<p>我起初在调研视觉模型的推理加速方案，尤其针对扩散模型。目前技术分为以下几种：</p>
-<ul>
-<li><p>设计更高效的去噪流程，如将高分辨率图像压缩为低分辨率的潜在表示（我的理解，类似于VAE先做压缩，图像VAE和视觉3D
-VAE）。</p></li>
-<li><p>设计高效的采样算法改进采样，如DDIM、DPM，IDDPM等（这个方向侧重于微积分，需要很强的数学能力）。</p></li>
-<li><p>从预训练的扩散模型中蒸馏提取更快的生成模型（知识蒸馏，我觉得和剪枝也可以算是同源，都是在做模型压缩）。</p></li>
-<li><p>分布式并行单次图像采样，如DistriFusion（以上观点也出自这篇论文，这是软硬件的视角来加速模型推理）。</p></li>
-</ul>
-<p>原文链接：<span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvcGRmLzIzMDguMDY3Njc=">A Survey on Deep
-Neural Network Pruning: Taxonomy, Comparison, Analysis, and
-Recommendations<i class="fa fa-external-link-alt"></i></span>，论文已被TPAMI接收。</p>
-<hr />
-<h1 id="剪枝">剪枝</h1>
-<p>目前已知的问题是在某些具体场景中，计算资源有限、能源和带宽受限，基础模型或通用模型一般参数量巨大，计算复杂性和内存占用使其无法应用在边缘设备上。此外，包含冗余特征的大型模型可能受到攻击，削弱网络的能力。</p>
-<p>目前压缩模型的方案有以下几种，分别是神经网络修剪（neural network
-pruning）。权重矩阵的低秩分解（low-rank factorizations of the weight
-matrices），量化（quantization），知识蒸馏（knowledge
-distillation）。神经网络搜索（neural architecture search）等。</p>
-<p>而剪枝是各种模型压缩方法中极为重要的一种。我从以下几个方面归类剪枝的方法，基于论文提出的三个问题引申的分类标准。</p>
-<p>（1）修剪神经网络，实现通用加速还是特定加速？特定加速需要专门的硬件或者软件支持，而通用加速可以随意迁移。基于这个问题，剪枝方法被分为结构化剪枝（Structured
-Pruning），非结构化剪枝（Unstructured
-Pruning）和半结构化剪枝（Semi-structured Pruning）。</p>
-<p>（2）何时修剪神经网络？从这个问题出发，剪枝又可以分为训练前剪枝（Pruning
-Before Training，PBT），训练期间剪枝（Pruning During
-Training，PDT），训练后剪枝（Pruning After Training，PAT）。</p>
-<p>（3）是否根据特定标准（specific
-metrics）进行剪枝，还是学习剪枝（learn to
-prune，我更喜欢称之为自适应或可学习的剪枝）？在这个问题上，标准依赖于具体的评分公式，而可学习剪枝通常通过训练在过程中实现动态的剪枝。</p>
-<h2 id="特定或通用加速">特定或通用加速</h2>
-<h3 id="非结构化剪枝">非结构化剪枝</h3>
-<figure>
-<img src="/next-blog/2024/12/pruning_survey/1.png" alt="Unstructure Pruning" style="width:90%;">
-<figcaption style="font-size: 14px;">
-图1: 非结构化剪枝
-</figcaption>
-</figure>
-<p>如图1所示，非结构化剪枝并不是修剪神经元或通道数，而这两者影响了输出的维度和通道数。具体来说，每一层的输入和输出的维度都不会发生改变，在深度神经网络（Deep
-Neutral
-Network，DNN）规模不大时，常见的做法是为每个神经元或卷积核添加掩码，掩码决定单个神经元或卷积核的哪些参数为0。而在常规的软硬件环境中，将某些参数设置为0并不会加速模型的推理，所以，这种剪枝方式会特定于硬件和软件的支撑。在大规模的DNN中，一般不会采用掩码增加额外的开销，而是将参数直接设置为0。</p>
-<h3 id="结构化剪枝">结构化剪枝</h3>
-<figure>
-<img src="/next-blog/2024/12/pruning_survey/2.png" alt="Structure Pruning" style="width:90%;">
-<figcaption style="font-size: 14px;">
-图2: 结构化剪枝
-</figcaption>
-</figure>
-<p>如图2所示，结构化剪枝正好与非结构化剪枝相反，它直接剪枝整个神经元或卷积核，甚至是整个层。这种方式无需特殊的硬件或软件支持，方便地获得更小的模型以应用在通用软硬件环境中。</p>
-<h2 id="何时剪枝">何时剪枝</h2>
-<figure>
-<img src="/next-blog/2024/12/pruning_survey/3.png" alt="Structure Pruning" style="width:90%;">
-<figcaption style="font-size: 14px;">
-图3: 何时剪枝？
-</figcaption>
-</figure>
-<h3 id="训练前剪枝">训练前剪枝</h3>
-<p>顾名思义，一些研究从初始化的模型权重中寻找能够是模型更快收敛的子网络结构，主要目的是为了降低预训练成本。目前PBT主要用于CNN的修剪。网络大小和适当的逐层剪枝率是从头开始训练初始化时随机剪枝的网络以匹配密集模型性能的两个重要因素。然而，后续更多研究发现，在相同的剪枝率下，在训练期间或训练后通过剪枝得到的子网络比在初始化时剪枝的子网络具有更高的有效参数数量和更强的表达能力。</p>
-<h3 id="训练期间剪枝">训练期间剪枝</h3>
-<p>PDT会在初始化模型权重的基础上加入权重掩码，并在训练过程中动态的学习掩码来应用剪枝。一部分方法在剪枝之后会进行微调来恢复模型的性能。如何学习合适的掩码又分出了不同的方法，一些研究基于（1）稀疏正则化进行剪枝,基于稀疏正则化的方法一般会设置可学习掩码，并在损失函数上重新构造来实现训练过程中动态地剪枝过程，一些研究关注重新构造损失中L0、L1或L2正则化项来学习与目标架构匹配的剪枝掩码；还有一些研究提出（2）初始化为稀疏网络，并动态反复增加和修剪权重来获得最优的子网络进而实现剪枝，称为动态稀疏训练；还有一部分研究（3）基于分数，利用某些评分标准来修剪不重要的权重，这些研究直接将权重置0而无需使用掩码；还有一部分研究（4）提出可微分剪枝。</p>
-<h3 id="训练后剪枝">训练后剪枝</h3>
-<p>PAT是目前最流行的剪枝处理流程，人们普遍认为预训练模型对于获得高效的子网络至关重要，特别是大语言模型和大型视觉模型（如扩散模型）。</p>
-<p>这类剪枝方法的一般性流程是（1）预训练大型模型使其收敛，（2）剪枝对性能影响最小的权重，（3）对剪枝后的模型进行微调来恢复模型性能或适应新的下游任务。其中（2）、（3）可以重复多次进行来实现渐进剪枝。</p>
-<p>最近的研究指出大型模型如LLM即使修剪之后微调成本仍然高昂，为了解决这个问题，提出了预训练+直接剪枝的策略，无需重新训练，通常通过使用补偿机制来减轻性能下降，从而实现可忽略不计的准确度损失。</p>
-<h4 id="彩票假设lottery-ticket-hypothesislth">彩票假设（Lottery Ticket
-Hypothesis，LTH）</h4>
-<p>LTH提出了一个有趣的观点：一个训练好的神经网络中，只有少部分神经元（中奖神经元）对最终模型性能至关重要，而大部分神经元和连接是冗余的。中奖神经元类似于彩票，它们的存在承担了模型的大部分功能。后续研究进一步拓展LTH，如证明中奖神经元的可迁移性（迁移学习）。</p>
-<p>除此之外，一些研究分析了LTH成功的原因，给出理论上的证明。与此同时，也有研究挑战LTH的观点，他们发现中奖彩票很大程度上取决训练设置，例如，较小的学习率和训练次数不足的算法更有可能找到中奖彩票。</p>
-<h4 id="基于分数的方法score-based">基于分数的方法（score based）</h4>
-<p>在这个方向上，有基于权重范数评估，有基于有无权重时的损失变化评估，有使用一阶泰勒展开式估计损失变化，还有设置新的指标来评估的方法。</p>
-<h4 id="基于稀疏正则化sparsity-based">基于稀疏正则化（sparsity
-based）</h4>
-<p>与PDT所提到的稀疏正则化略有区别，一些研究尽管也使用稀疏正则化来剪枝，但其是在预训练模型的基础上对推理进行评估和剪枝。</p>
-<h4
-id="早期训练中的修剪pruning-in-early-training">早期训练中的修剪（pruning
-in early training）</h4>
-<p>这种方法旨在训练的早期阶段只训练网络少数迭代或周期之后，对网络进行剪枝，早期阶段的成本较低，且经过少量训练可以更有效地找到中奖彩票，然后再后续迭代中训练子网络达到初始网络的性能。</p>
-<h4 id="运行时剪枝run-time-pruning">运行时剪枝（run-time pruning）</h4>
-<p>对于给定的任务，产生准确输出的难度会有所不同，这意味着不同输入所需的模型容量是不同的（特指训练后的模型执行推理时）。这类方法旨在根据输入选择合适的子网络，例如运行时路由，通道显著性与阈值比较进而跳过贡献较小的通道。</p>
-<h2 id="基于标准与动态可学习剪枝">基于标准与动态可学习剪枝</h2>
-<h3 id="基于分数">基于分数</h3>
-<p>基于分数的方法是一种更简单直观的评估策略。这是我比较关注的一个方向。</p>
-<h4 id="基于幅度magnitude-based">基于幅度（magnitude based）</h4>
-<p>一个直观的假设是，如果权重的绝对值很小，一般来说对于网络的输出更不重要，基于此，可以设计阈值来剪枝。</p>
-<p><span class="math display">\[
-\begin{equation}
-m_i =
-\begin{cases}
-1 : if\parallel w_i \parallel_1 \geqslant a \\
-0 : if\parallel w_i \parallel_1 &lt; a
-\end{cases}
-\end{equation}
-\]</span></p>
-<p>其中，m是掩码，a是阈值。</p>
-<p>由于输出受到激活函数的影响，如Relu激活函数在输入（即网络输出）为负数时，直接输出0，基于此，有研究提出权重与激活函数的结合。</p>
-<p><span class="math display">\[
-\begin{equation}
-s_{ij} = |w_{ij}\dot \parallel x_j \parallel_2
-\end{equation}
-\]</span></p>
-<h4 id="l_p-正则"><span class="math inline">\(l_p\)</span> 正则</h4>
-<p><span class="math inline">\(l_p\)</span>范数的通式如下：</p>
-<p><span class="math display">\[
-\begin{equation}
-\| x \|_p := \left( \sum_{i=1}^n |x_i|^p \right)^{\frac{1}{p}}
-\end{equation}
-\]</span></p>
-<p>具有较小<span
-class="math inline">\(l_p\)</span>范数的权重比具有较高<span
-class="math inline">\(l_p\)</span>范数的权重更有可能被剪枝。</p>
-<h4 id="敏感度与显著性">敏感度与显著性</h4>
-<p>一些研究利用敏感度或显著性来评估权重(过滤器、神经元等)的重要性。</p>
-<h4 id="损失">损失</h4>
-<p>基于损失的评估通常使用泰勒公式展开来近似。</p>
-<p>一阶泰勒展开是测量损失变化最常用的方法。在 w
-处有小扰动的损失变化定义如下</p>
-<p><span class="math display">\[
-\begin{equation}
-\Delta \mathcal{L} = \mathcal{L}(\mathbf{w} + \Delta \mathbf{w}) -
-\mathcal{L}(\mathbf{w}) = \nabla_{\mathbf{w}} \mathcal{L} \cdot \Delta
-\mathbf{w}.
-\end{equation}
-\]</span></p>
-<p>损失函数的二阶泰勒展开式包括一阶（梯度）项、二阶（Hessian）项，并且忽略高阶项。不失一般性，损失变化的近似可得出</p>
-<p><span class="math display">\[
-\begin{equation}
-\mathcal{L}(\mathbf{w} + \Delta \mathbf{w}) - \mathcal{L}(\mathbf{w}) =
-\nabla_{\mathbf{w}} \mathcal{L} \cdot \Delta \mathbf{w} + \frac{1}{2}
-\Delta \mathbf{w}^T H \Delta \mathbf{w},
-\end{equation}
-\]</span></p>
-<p>where <span class="math inline">\(\text{where } H =
-\nabla_{\mathbf{w}}^2 \mathcal{L}(\mathbf{w})\)</span></p>
-<h1 id="小结">小结</h1>
-<p>通过剪枝技术来实现压缩模型进而降低训练成本并提高推理效率是非常重要的手段，在大型视觉模型领域，目前已有文献直接探索这类模型的剪枝，例如U-Net主干网的SD家族以及Transformer主干网的DiT家族。<span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvYWJzLzIzMDUuMTA5MjQ=">Structural Pruning for Diffusion
-Models<i class="fa fa-external-link-alt"></i></span>是第一篇在扩散模型上探索结构化剪枝的文章，<span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvcGRmLzI0MDQuMTEwOTg=">LAPTOP-Diff: Layer Pruning and
-Normalized Distillation for Compressing Diffusion
-Models<i class="fa fa-external-link-alt"></i></span>探讨了在粗粒度水平下，SD上做层剪枝的可能。</p>
 
       
     </div>
