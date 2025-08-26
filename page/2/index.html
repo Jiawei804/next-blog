@@ -123,18 +123,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/next-blog/categories/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/next-blog/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -151,6 +151,251 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/01/LAPTOP-Diff/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/01/LAPTOP-Diff/" class="post-title-link" itemprop="url">LAPTOP-Diff | Layer Pruning and Normalized Distillation for Compressing Diffusion Models</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2025-01-03T00:00:00+08:00">2025-01-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-01-06 10:45:56" itemprop="dateModified" datetime="2025-01-06T10:45:56+08:00">2025-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E5%89%AA%E6%9E%9D/" itemprop="url" rel="index"><span itemprop="name">剪枝</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="concept-overview">Concept Overview</h1>
+<p>[结构化剪枝]
+是指剪枝整个神经元，甚至是整个层。这种方式无需特殊的硬件或软件支持，方便地获得更小的模型以应用在通用软硬件环境中。</p>
+<p>[细粒度剪枝]
+是指对参数矩阵的行和列进行剪枝（修剪神经元），一般情况下，相当于减少模型的宽度而不改变深度。</p>
+<p>[粗粒度剪枝] 是指直接删除某些网络的全部参数，即删除层。</p>
+<p>[特征蒸馏]
+是指学生模型的每一层输出的特征图尽量对齐教师模型的输出特征图，在
+LAPTOP-Diff
+中，是指SD模型的每一个块（DownBlocks，MiddleBlock，UPBlocks）的输出对齐教师模型。</p>
+<h1 id="motivation">Motivation</h1>
+<p>SDM
+的出色性能伴随着相当大的内存消耗和延迟，使其在个人电脑甚至移动设备上的部署受到极大限制。
+此外，SDM 系列的最新版本，例如
+SDXL，参数趋于增大，导致内存消耗和延迟更大。很多工作都致力于减少SDM的推理成本，例如去噪步骤的减少，高效的架构设计，结构化剪枝，量化，硬件感知优化，蒸馏等。</p>
+<p>在这些方法中，高效的架构设计和结构剪枝研究不足。一方面，之前的高效架构设计方法通常经过大量的实证研究来识别
+SDM 的 U-Net
+中不重要的层，然后将其删除，以实现更小更快的网络。这种手工设计的方式通常不能达到最佳性能，并且缺乏可扩展性和泛化性。我们注意到，这些手工设计的层删除方法可以被自动化的层剪枝方法取代，以获得更好的可扩展性和性能。另一方面，之前关于
+SDM
+的结构剪枝方法侧重于细粒度剪枝，即剪枝参数矩阵的行和列。然而有研究表明，细粒度剪枝在降低模型延迟方面通常不如粗增益层剪枝有效，而且有趣的是，层剪枝可以达到与细增益结构剪枝相同甚至更好的效果。</p>
+<p>在移除或修剪层之后，SDM
+通常无法直接生成清晰的图像。以前的方法利用知识蒸馏来重新训练修剪后的网络以恢复其性能。以前的方法通常利用三种类型的目标，即常规训练目标、logit
+蒸馏（输出蒸馏）目标和特征蒸馏目标。在这三个部分中，特征蒸馏是关键部分。然而，我们进一步的检查发现了以前基于蒸馏的再训练方法中的一个不平衡问题，即在整个再训练过程中，一些特征损失项比其他特征损失项占主导地位，导致性能下降。</p>
+<p>基于以上两点，LAPTOP-Diff
+提出了压缩扩散模型的层修剪和规范化蒸馏（LAPTOP-Diff）。</p>
+<h1 id="contribution">Contribution</h1>
+<p>LAPTOP-Diff
+站在组合优化问题的高角度定义了层修剪问题，证明了一次性层修剪标准的有效性来自于其良好的可加性。NP-hard问题转化为01背包问题后，使用动态规划选择要剪枝的网络层。</p>
+<p>针对基于蒸馏的再训练方法中的不平衡问题，即在整个再训练过程中，一些特征损失项比其他项占主导地位，LAPTOP-Diff
+通过提出的规范化特征蒸馏缓解了这个问题。</p>
+<h1 id="layer-pruning">Layer Pruning</h1>
+<p>层剪枝该剪枝哪些层呢？在U-Net网络的训练过程中，通常的目标是预测噪声。所以我们很自然地想到对比剪枝前和剪枝后模型预测噪声的能力作为评价标准。于是，设<span
+class="math inline">\(\epsilon_ori\)</span>表示原始模型的输出，<span
+class="math inline">\(\epsilon(r_1,r_2,...,r_m)\)</span>表示去掉<span
+class="math inline">\(r_1,r_2,...,r_m\)</span>层之后的网络的输出，于是优化问题可以写成：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp; \min_{r_1, \ldots, r_m} \quad \mathbb{E} \left\| \epsilon(r_1,
+\ldots, r_m) - \epsilon_{\text{ori}} \right\|_2^2 \\
+\text{s.t.}~~~~ &amp; \{r_1, \ldots, r_m\} \subseteq L^n, \sum_{i=1}^m
+\text{params}(r_i) \geq P,
+\end{aligned}
+\end{equation}\]</span></p>
+<p>其中，<span class="math inline">\(param(r_i)\)</span>表示<span
+class="math inline">\(r_i\)</span>层的参数数量，P表示根据规定的剪枝率计算得到的要剪枝的参数数量。直接求解上式是一个NP-hard问题，于是作者开始对该式进行近似。</p>
+<p>首先，通过不等式变换：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp; \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) -
+\epsilon_{\text{ori}} \right\|_2^2 \\
+&amp; \leq \mathbb{E} \left\| \epsilon(r_1) - \epsilon_{\text{ori}}
+\right\|_2^2 \\
+&amp; ~~~~ + \mathbb{E} \left\| \epsilon(r_1, r_2) - \epsilon(r_1)
+\right\|_2^2 \\
+&amp; ~~~~ + \cdots \\
+&amp; ~~~~ + \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) -
+\epsilon(r_1, \ldots, r_{m-1}) \right\|_2^2.
+\end{aligned}
+\end{equation}\]</span></p>
+<p>于是，优化目标近似为如下形式：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\min_{r_1, \ldots, r_m} &amp;
+\mathbb{E} \left\| \epsilon(r_1) - \epsilon_{\text{ori}} \right\|_2^2
++ \mathbb{E} \left\| \epsilon(r_1, r_2) - \epsilon(r_1) \right\|_2^2 +
+\cdots \\
+&amp; + \mathbb{E} \left\| \epsilon(r_1, \ldots, r_m) - \epsilon(r_1,
+\ldots, r_{m-1}) \right\|_2^2, \\
+
+\text{s.t.} &amp; ~~~~ \{r_1, \ldots, r_m\} \subseteq L^n, \
+\sum_{i=1}^m \text{params}(r_i) \geq P.
+\end{aligned}
+\end{equation}\]</span></p>
+<p>但这仍然是个NP-hard问题，还要再进行化简。在这个式子中，每一项都是原始网络（剪枝或未剪枝）与删除一个新的额外层的网络之间的均方误差损失。作者提出一个假设，即移除同一层<span
+class="math inline">\(r_i\)</span>所导致的均方误差损失在不同网络中是相似的。公式假设如下：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp; \mathbb{E} \left\| \epsilon(r_1, \ldots, r_{i-1}, r_i) -
+\epsilon(r_1, \ldots, r_{i-1}) \right\|_2^2 \\
+&amp; ~~~~ \approx \mathbb{E} \left\| \epsilon(r_1, \ldots, r_{i-2},
+r_i) - \epsilon(r_1, \ldots, r_{i-2}) \right\|_2^2 \\
+&amp; ~~~~ \approx \cdots \\
+&amp; ~~~~ \approx \mathbb{E} \left\| \epsilon(r_1, r_i) - \epsilon(r_1)
+\right\|_2^2 \\
+&amp; ~~~~ \approx \mathbb{E} \left\| \epsilon(r_i) -
+\epsilon_{\text{ori}} \right\|_2^2. \\
+\end{aligned}
+\end{equation}\]</span></p>
+<p>这样，我们就可以重新整理优化目标函数了，最终的形式如下：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp; \min_{r_1, \ldots, r_m} \sum_{i=1}^m \mathbb{E} \left\|
+\epsilon(r_i) - \epsilon_{\text{ori}} \right\|_2^2 \\
+
+\text{s.t.} &amp; \ \{r_1, \ldots, r_m\} \subseteq L^n, \ \sum_{i=1}^m
+\text{params}(r_i) \geq P.
+\end{aligned}
+\end{equation}\]</span></p>
+<p>使用该式替代最开始的优化目标意味着一个有趣的性质，称为可加性，这被解释为由许多扰动引起的网络输出失真近似等于由每个单个扰动引起的输出失真的总和。作者在论文的实验部分验证了可加性以及最终目标是对原始目标的极好近似。</p>
+<p>经过上面的推导，优化问题变成了时间复杂度仅为O(n)的0-1背包问题，通常这种问题使用动态规划或者贪婪搜索算法来解决。算法流程如图1所示。</p>
+<figure>
+<img src="/next-blog/2025/01/LAPTOP-Diff/1.png"  style="width:100%;">
+<figcaption style="font-size: 14px;">
+图1: 一次性层剪枝算法
+</figcaption>
+</figure>
+<h1 id="normalized-feature-distillation">Normalized Feature
+Distillation</h1>
+<p>在模型蒸馏中，先前的方法对修剪后的SDM进行重新训练时，利用下面三个目标，分别是任务损失、输出蒸馏损失和特征蒸馏损失。任务损失是指使用剪枝后的模型重新预测噪声与真实噪声的差距，输出损失是指剪枝后的模型（学生，Student）预测噪声与剪枝前的模型（教师，Teacher）预测噪声之间的差距，特征损失是指学生模型每一层输出的特征图与教师模型每一层输出的特征图之间的差距（LAPTOP-Diff中，对照论文图表，这里应该指每一个块的输出）。</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\mathcal{L}_{\text{Task}} &amp; = \mathbb{E}_{z, y, t, \epsilon} \left\|
+\epsilon - \epsilon_S(z_t, y, t) \right\|_2^2, \\
+\mathcal{L}_{\text{OutKD}} &amp; = \mathbb{E}_{z, y, t} \left\|
+\epsilon_T(z_t, y, t) - \epsilon_S(z_t, y, t) \right\|_2^2, \\
+\mathcal{L}_{\text{FeatKD}} &amp; = \sum_i \mathbb{E}_{z, y, t} \left\|
+f_T^i(z_t, y, t) - f_S^i(z_t, y, t) \right\|_2^2, \\
+\end{aligned}
+\end{equation}\]</span></p>
+<p>在实践中，作者发现<span
+class="math inline">\(L_{FeatKD}\)</span>在retraining中扮演了至关重要的角色。然而，在进一步的检查中，作者发现再训练时先前的特征蒸馏方法存在不平衡问题。如图2所示，在整个蒸馏过程中，最高特征损失项比最低特征损失项大约大
+10000 倍，并产生大约 1000
+倍的梯度，稀释了数值上不重要的特征损失项的梯度。L2
+范数越大的特征图自然会产生越大的特征损失项，不同特征损失项之间显著的量级差异可以归因于两个因素，即在不同阶段结束时，教师和学生特征图的固有差异(1)以及特征图的
+L2 范数(2)会有所不同。</p>
+<figure>
+<img src="/next-blog/2025/01/LAPTOP-Diff/2.png" style="width:100%;">
+<figcaption style="font-size: 14px;">
+图2: SDXL 教师每个模块输出特征图的 L2 范数以及再训练第 15K
+次迭代的特征损失项
+</figcaption>
+</figure>
+<p>很明显，问题(2)可以通过认为设计来缓解，作者提出第二个因素在很大程度上加剧了不平衡问题。于是乎，采用一种加权手段来平衡特征图的
+L2 范数带来的影响：</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\mathcal{L}_{\text{FeatKD-normed}} &amp;= \sum_{i \in V} \mathbb{E}_{z,
+y, t} \alpha^i \left\| f_T^i(z_t, y, t) - f_S^i(z_t, y, t) \right\|_2^2,
+\\
+
+\alpha^i &amp;= \frac{\sum_{j \in V} \left\| f_T^j(z_t, y, t)
+\right\|_2}{|V| \left\| f_T^i(z_t, y, t) \right\|_2},
+\end{aligned}
+\end{equation}\]</span></p>
+<p>其中，𝑉是修剪后各个层集合（每个块），|𝑉|是集合𝑉的大小。当每个块输出的特征图的L2范数相同时，系数变为1。</p>
+<p>经过变换，最终如图3所示，通过应用归一化特征蒸馏，作者观察到一些模块的特征损失显着下降，而在其他模块的损失则略有增加，这证明了一些特征损失项相对于其他特征损失项的主导地位得到了缓解。</p>
+<figure>
+<img src="/next-blog/2025/01/LAPTOP-Diff/3.png" style="width:100%;">
+<figcaption style="font-size: 14px;">
+图3: 在再训练的第 15K
+次迭代中，使用原始特征蒸馏或标准化特征蒸馏的每个模块的非标准化特征损失项
+</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
