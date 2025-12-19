@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/next-blog/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/next-blog/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -151,6 +151,243 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/12/DDT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/12/DDT/" class="post-title-link" itemprop="url">论文笔记|DDT:Decoupled Diffusion Transformer</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-12-16 00:00:00 / Modified: 15:54:46" itemprop="dateCreated datePublished" datetime="2025-12-16T00:00:00+08:00">2025-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure>
+<img src="/next-blog/2025/12/DDT/1.jpg" style="width:90%;">
+</figure>
+<p>现有的去噪模型的一个问题是同一个网络去噪网络同时要“编码”噪声输入来提取低频语义信息，之后通过“解码”获得高频信息。这是一个优化困境（optimization
+dilemma）：编码低频语义必须要减少高频信号。DDT提出将二者解耦，从原来的only-decoder转变为encoder-decoder架构。DDT包含一个Condition
+Encoder用于低频语义信息的提取，Velocity
+Decoder用于速度预测生成更高质量的图像。</p>
+<p>DDT将Condition
+Encoder的输出称为self-condition，在此基础上，他们采用了sharing
+strategy提高推理速度，这通常伴随极小的性能损失。DDT仅训练256个epoch，4倍于REPA的训练速度即可达到1.31的FID。</p>
+<p>sharing strategy是指相邻去噪步的生成结果具有一致性（local
+consistency），假设推理步数N，编码器给定计算成本K，则共享率计算为<span
+class="math inline">\(1-(K/N)\)</span>。因此，有<span
+class="math inline">\(|\Phi|=K\)</span>
+是self-conditon重新计算的时间步的集合：</p>
+<p>$$ <span class="math display">\[\begin{equation}
+z_t =
+\begin{cases}
+z_{t-{\delta}t}, &amp; \text{if }t \notin \Phi \\
+Encoder(x_t, t, y), &amp; \text{if }t \in \Phi
+\end{cases}
+
+\end{equation}\]</span> $$</p>
+<p><span class="math inline">\(|\Phi|=K\)</span> 通过动态规划求解
+？？？？？？？？</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/12/REPA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/next-blog/images/avatar.gif">
+      <meta itemprop="name" content="Jiawei Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张佳伟的博客">
+      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张佳伟的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/next-blog/2025/12/REPA/" class="post-title-link" itemprop="url">论文笔记|Representation Alignment for Generation:Training Diffusion Transformers Is Easier Than You Think</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-12-11 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-11T00:00:00+08:00">2025-12-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-16 16:09:06" itemprop="dateModified" datetime="2025-12-16T16:09:06+08:00">2025-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/next-blog/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><code>ICLR2025</code>
+扩散模型中的去噪过程中，在模型内部存在有意义的表征，尽管这些表征的质量仍然落后于通过最近的自监督学习方法学习到的表征。论文训练大规模扩散模型用于生成的一个主要瓶颈在于有效地学习这些表示。通过结合高质量的外部视觉表征，而不是仅仅依靠扩散模型来独立学习，训练可以变得更容易。作者通过引入一种称为表示对齐REPresentation
+Alignment(REPA)的简单正则化来研究这一点，该正则化将去噪网络中噪声输入隐藏状态的投影与从外部预训练的视觉编码器获得的干净图像表示对齐。当应用于DiT和SiT时，REPA在训练效率和生成质量方面都有了显著的改进。REPA可以将SiT训练的速度提高17.5倍以上，与在不到400K步的情况下训练7M步的SiT-XL\2模型的性能(无cfg)相匹配。在最终生成质量方面，作者使用cfg和guidance
+interval实现了FID=1.42的最先进结果。</p>
+<figure>
+<img src="/next-blog/2025/12/REPA/1.jpg" alt="Transformer" style="width:90%;">
+</figure>
+<p>训练扩散模型的主要挑战源于需要学习高质量的内部表征。REPA表明：当生成式扩散模型得到来自另一个模型（例如自监督视觉编码器）的外部高质量表征的支持时，其性能可以得到大幅提升。论文使用
+DINOv2 作为外部自监督视觉编码器提供表征对齐。</p>
+<figure>
+<img src="/next-blog/2025/12/REPA/2.jpg" alt="Transformer" style="width:90%;">
+</figure>
+<p>作者使用Linear Probing 和 CKNNA
+来评估扩散模型的内部表征能力，图2a所示，作者观察到预训练扩散变压器的隐藏状态表示，在第20层实现了相当高的线性探测峰(t表示dropout
+ratio used in linear
+probing)。然而，它的性能仍然远远低于DINOv2，这表明两种表示之间存在很大的语义差距。此外，在达到这个峰值后，线性探测性能迅速下降，这表明扩散转换器必须从仅仅专注于学习语义丰富的表示转变为生成具有高频细节的图像。</p>
+<p>在图2b中，作者使用CKNNA报告了SiT和DINOv2之间的代表性比对。特别是，SiT模型表示已经表现出比MAE更好的一致性。然而，绝对对齐得分仍然低于其他自监督学习方法(例如，MoCov3
+vs.
+DINOv2)。这些结果表明，虽然扩散变压器表示与自监督视觉表示表现出一定的一致性，但一致性仍然很弱。</p>
+<p>如图2c所示，作者通过更大的模型和扩展的训练观察到改进的对齐。然而，对齐仍然很低，并且没有达到其他自监督视觉编码器(例如，MoCov3和DINOv2)之间观察到的水平，即使经过大量的7M迭代训练。</p>
+<figure>
+<img src="/next-blog/2025/12/REPA/3.jpg" alt="Transformer" style="width:90%;">
+</figure>
+<p>作者发现在SiT上，第8层施加REPA，Linear Probing 和 CKNNA
+达到了峰值。</p>
+<p><span class="math display">\[ \begin{equation}
+\mathcal{L}_{\text{REPA}}(\theta, \phi) := - \mathbb{E}_{\mathbf{x}_*,
+\epsilon, t} \left[ \frac{1}{N} \sum_{n=1}^{N}
+\operatorname{sim}(\mathbf{y}_*^{[n]}, \, h_\phi(h_t^{[n]})) \right]
+\end{equation} \]</span></p>
+<p>REPA对齐损失如上，一张干净的图像<span
+class="math inline">\(x_*\)</span>,预训练编码器（如DINOV2）定义为<span
+class="math inline">\(f\)</span>，<span class="math inline">\(y_*=f(x_*)
+\in \mathcal{R}^{N×D}\)</span>，N和D分别是pathch的数量和embedding
+dimension of encoder output，<span
+class="math inline">\(h_t=f_{\theta}(z_t)\)</span>是扩散模型的输出，并通过可学习映射层<span
+class="math inline">\(h_{\phi}(h_t)\)</span>是一个MLP。</p>
+<figure>
+<img src="/next-blog/2025/12/REPA/fig5.jpg" alt="Transformer" style="width:90%;">
+</figure>
+<p>图5a分析了多种target
+encoder的效果，DINOV2实现最低FID的同时，预训练之后的DINOV2+SiT-L，在线性探测上实现了更高的线性探测准确率。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1072,9 +1309,15 @@ The FID for the original model is 13.85.
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-03-22 00:00:00 / Modified: 21:04:04" itemprop="dateCreated datePublished" datetime="2025-03-22T00:00:00+08:00">2025-03-22</time>
+      <time title="Created: 2025-03-22 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-22T00:00:00+08:00">2025-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 10:59:09" itemprop="dateModified" datetime="2025-12-19T10:59:09+08:00">2025-12-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1101,12 +1344,16 @@ The FID for the original model is 13.85.
     
     <div class="post-body" itemprop="articleBody">
           <p>归一化技术从神经网络发展到今天，已经诞生了众多种类。批归一化，层归一化，组归一化等。这篇文章总结了系统的归一化技术。</p>
+<figure>
+<img src="/next-blog/2025/03/Normalization/Normalization.jpg" style="width:90%;">
+</figure>
 <h1 id="批归一化batch-normalization">批归一化|Batch Normalization</h1>
 <p>总所周知，神经网络都是通过梯度下降算法来优化训练，而更流行的一种方式是小批量随机梯度下降，介于one-sample随机梯度下降和full-samples随机梯度下降之间。然而，不合适的学习率和参数初始化有可能导致训练坍塌，BN正是为了缓解这一问题而设计。</p>
 <p>在提出BN的论文中，作者认为BN有效减弱了内部协变量偏倚（ICS）问题——as
 the change in the distribution of network activations due to the change
 in network parameters during training。</p>
-<p>具体来说，对于一个Batch，对其本身做归一化。假设一个Batch有n个样本，每个样本有d个特征，那么对于第k个特征归一化的结果:</p>
+<p>具体来说，BN
+layer对每个Batch做归一化。假设一个Batch有n个样本，每个样本有d个特征，那么对于第k个特征归一化的结果:</p>
 <p><span class="math display">\[
 \begin{equation}
 \hat{x}^{(k)} = \frac{x^{(k)} -
@@ -1114,7 +1361,7 @@ E[x^{(k)}]}{\sqrt{\mathrm{Var}[x^{(k)}]}}
 \end{equation}
 \]</span></p>
 <p>其中E和Var分别表示在第k个特征上这个批量中所有的样本的均值和方差。</p>
-<p>这其中也存在一些问题，比如新的Batch分布可能会破坏已经学习到的特征。所以BN还添加了两个可以学习的变量<span
+<p>这其中也存在一些问题，比如新的Batch分布可能会破坏前面已经学习到的数据分布。所以BN还添加了两个可以学习的变量<span
 class="math inline">\(\beta\)</span>和<span
 class="math inline">\(\gamma\)</span>:</p>
 <p><span class="math display">\[
@@ -1126,9 +1373,16 @@ y^{(k)} = \gamma^{(k)}\hat{x}^{(k)} + \beta^{(k)}
 \sqrt{\mathrm{Var}[x^{(k)}]}\)</span> 并且 <span
 class="math inline">\(\beta^{(k)} = E[x^{(k)}]\)</span> 时，<span
 class="math inline">\(y^{(k)} = x^{(k)}\)</span>。</p>
-<p>BN在测试过程中的所需的均值和方差已经在训练过程中存储下来，这是由深度学习框架已经实现的。这样单样本推理仍然可以正常进行。</p>
-<h1 id="层归一化batch-normalization">层归一化|Batch Normalization</h1>
-<p>组归一化要求每个Batch中的样本长度必须一致，然而在现实情况下，文本等序列数据并不是等长的1，尽管会在数据预处理时统一大小，但很明显填充位置并不代表真实数据的分布，这样的归一化是没有效果的，甚至损害模型的收敛。BN在面对RNN这种网络时显得束手无策；同时，BN在面对小批次数据时，如资源受限的环境中，性能也会大幅下降。</p>
+<p>在训练时，BN
+layer每次使用的均值和方差是从每个batch上单独计算的，同时，BN
+layer会维护一个全局均值和方差，在推理时，BN
+layer使用全局均值与方差对每个样本做归一化。</p>
+<p>类比：有一堆书，有 N 本，每本有 C 页，每页有 H 行，每行 W
+个字符，而每个字符可以看成具有不同信息量或者复杂度的数值。BN
+求均值时，相当于把这些书按页码一一对应地加起来（例如第1本书第36页，第2本书第36页......），再除以每个页码下的字符总数：N×H×W，因此可以把
+BN 看成求“所有书对应页的平均字符信息量”的操作，求标准差时也是同理。</p>
+<h1 id="层归一化layer-normalization">层归一化|Layer Normalization</h1>
+<p>批归一化要求每个Batch中的样本长度必须一致，然而在现实情况下，文本等序列数据并不是等长的1，尽管会在数据预处理时统一大小，但很明显填充位置并不代表真实数据的分布，这样的归一化是没有效果的，甚至损害模型的收敛。BN在面对RNN这种网络时显得束手无策；同时，BN在面对小批次数据时，如资源受限的环境中，性能也会大幅下降。</p>
 <p>令人惊喜的是，LN完美的解决了这两个问题；BN对同一特征的同一通道所有批次内样本做归一化，而LN则对同一样本的同一通道的所有特征做归一化。本质上LN避开了在多个样本上进行归一化的操作，只在一个样本的不同通道上对所有特征做归一化。</p>
 <p>假设某个样本在经过某一层之后a，特征数(神经元数量)为H，均值与方差:</p>
 <p><span class="math display">\[
@@ -1151,6 +1405,27 @@ class="math inline">\(\hat{a}\)</span>进行二次缩放:</p>
 y = f(\mathbf{g} \odot \hat{\mathbf{a}}+\mathbf{b})
 \end{equation}
 \]</span></p>
+<p>类比：有一堆书，有 N 本，每本有 C 页，每页有 H 行，每行 W
+个字符，而每个字符可以看成具有不同信息量或者复杂度的数值。LN
+求均值时，相当于把每本书所有页的字符数相加（例如第1本书第36页，第2本书第40页......），再除以每本书的字符总数：C×H×W，因此可以把
+LN 看成求“每本书的平均字符信息量”的操作，求标准差时也是同理。</p>
+<h1 id="实例归一化instance-normalization">实例归一化|Instance
+Normalization</h1>
+<p>IN最初用于图像的风格迁移，作者认为不同通道的均值与方差会影响最终生成图像的风格，因此将图像在每个通道上做归一化，并使用参考的风格图像的每个通道上的均值和方差做“去归一化”。</p>
+<p>类比：有一堆书，有 N 本，每本有 C 页，每页有 H 行，每行 W
+个字符，而每个字符可以看成具有不同信息量或者复杂度的数值。IN
+求均值时，相当于把每本书每一页的字符数单独统计（例如第1本书第36页，第2本书第40页......），再除以每页的字符总数：H×W，因此可以把
+IN 看成求“每本书每页的平均字符信息量”的操作，求标准差时也是同理。</p>
+<h1 id="组归一化group-normalization">组归一化|Group Normalization</h1>
+<p>介于LN和IN之间，将通道数分组，主要目的是为了节约显存。</p>
+<p>类比：有一堆书，有 N 本，每本有 C 页，每页有 H 行，每行 W
+个字符，而每个字符可以看成具有不同信息量或者复杂度的数值。GN
+求均值时，相当于把每本书分成很多小册子，每个小册子有很多页，对每个小册子的字符数求和，再除以每个册子的字符总数：(C/G)×H×W，因此可以把
+GN 看成求“每个册子的平均字符信息量”的操作，求标准差时也是同理。</p>
+<h1 id="总结与回顾">总结与回顾</h1>
+<p>在众多归一化方法中，只有BN多维护一个全局均值和方差（注意均值与方差的全局统计量是通过指数滑动平均实现的），其他方法只维护可学习参数<span
+class="math inline">\(\gamma\)</span> 和 <span
+class="math inline">\(\beta\)</span>，在训练和推理中计算的统计量均值与方差用完就会丢弃。</p>
 
       
     </div>
@@ -1424,247 +1699,6 @@ G(z,c) := z - \hat{G}(z,c,T)
 \]</span></p>
 <p>对于鉴别器，使用同样的模型结构，但在第16,26,36层插入交叉注意力层和MLP层，提取特征，并通过拼接、归一化和全连接层得到logits用于对抗目标。结构如图所示。</p>
 <p>R1损失需要计算高阶梯度，而现有的加速方法如deepspeed并不支持，论文提出了一种近似R1损失的方案。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/01/Bartending_Diary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/next-blog/images/avatar.gif">
-      <meta itemprop="name" content="Jiawei Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张佳伟的博客">
-      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张佳伟的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2025/01/Bartending_Diary/" class="post-title-link" itemprop="url">调酒日记|第二种选择</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2025-01-14T00:00:00+08:00">2025-01-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-17 16:17:57" itemprop="dateModified" datetime="2025-03-17T16:17:57+08:00">2025-03-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%95%A3%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">散文</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>我不算是特别爱喝酒，本科的时候很少喝。都说一名合格的研究生的两项标配就是撸铁和饮酒。我发现特别有趣的是，现在的年轻人，特别喜欢喝鸡尾酒，一种基酒和各种软软（饮料等）勾兑的饮品，当然我也喜欢。</p>
-<p>我为什么会开始自己调酒？</p>
-<p>我喜欢喝咖啡，有一段时间我就在想用古典的方式自己来手冲咖啡，当我有这种想法的时候，潜意识经常会强化这一需求。后来我真的遇到了，在朋友圈看到有人在宿舍手冲咖啡，我那一刻被击中了，像这样的瞬间，生活中总是会存在。这就好像你以前在听一首歌，里面的歌词是“这座城市被大雨倾倒，我会给你怀抱”，你可能觉得这词平平无奇，这个时候你不会感知任何情绪。但当有一天，你下班路过一片水滩，看到了城市的倒影，那一刻你瞬间明白了“城市被大雨倾倒”的浪漫，从此那片水滩、那首歌，也不再是一个普通的水滩、一首普通的歌。</p>
-<p>“我们为什么喜欢哪些看起来荒诞的事？因为他们经历着我们想经历的，做着我们想做的，过着我们未曾想到过的生活。”</p>
-<hr />
-<h1 id="经典鸡尾酒">经典鸡尾酒</h1>
-<p>经典鸡尾酒已经走过两百多年的历史，不同的国家和地区由于其独特的地理环境和生活条件形成了具有鲜明地域特色的基酒以及衍生的各类鸡尾酒。如今，人们常提到的六大基酒包括威士忌，伏特加，龙舌兰，朗姆，金酒，白兰地。除此之外，各类软软，如汤力水，气泡水，苏打水；力娇酒（君度、蓝橙）；糖浆（红石榴）；柠檬汁等。通过酸甜来调和酒的烈性。</p>
-<h2 id="玛格丽特">玛格丽特</h2>
-<p>玛格丽特被称作“鸡尾酒之后”，它是除马天尼以外世界上知名度最高的传统鸡尾酒之一。它曾经是1949年全美鸡尾酒大赛的冠军。1926年，Jean
-Durasa去墨西哥，与Margarita相恋，墨西哥成了他们的浪漫之地。然而，有一次当两人去野外打猎时，玛格丽特中了流弹，最后倒在恋人Jean
-Durasa的怀中，永远离开了。于是，Jean
-Durasa就用墨西哥的国酒Tequila（龙舌兰）为鸡尾酒的基酒，用柠檬汁的酸味代表心中的酸楚，用盐霜意喻怀念的泪水。</p>
-<p>原材料： - 玛格丽特杯 - 粗盐（细盐比较闲，不做盐边也没问题） -
-45ml龙舌兰 - 25ml君度力娇酒 - 10-15ml柠檬汁 -
-15ml蓝橙力娇酒（非必须，蓝色玛格丽特）</p>
-<figure style="text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 20px auto; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-<img src="/next-blog/2025/01/Bartending_Diary/1.jpg" style="width: 90%; border-radius: 8px; transition: transform 0.3s ease;">
-<figcaption style="font-size: 14px; color: #555; margin-top: 10px; font-style: italic;">
-图1: 蓝色玛格丽特
-</figcaption>
-</figure>
-<h2 id="龙舌兰日出">龙舌兰日出</h2>
-<p>特基拉日出，又称龙舌兰日出，此款鸡尾酒是星座鸡尾酒中代表射手座（11月23日-12月22日）的一款鸡尾酒。当年滚石乐队在1972年的美洲巡回演出中饮用了这款鸡尾酒，使得这款鸡尾酒在美国盛行开来。寓意在生长着星星点点仙人掌，但又荒凉到极点的墨西哥平原上，正升起鲜红的太阳，阳光把墨西哥平原照耀得一片灿烂。龙舌兰日出中浓烈的龙舌兰香味容易使人想起墨西哥的朝霞。</p>
-<p>原材料： - 柯林杯 - 45ml龙舌兰 - 15ml柠檬汁 - 橙汁 - 红石榴糖浆</p>
-<figure style="text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 20px auto; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-<img src="/next-blog/2025/01/Bartending_Diary/2.jpg" style="width: 90%; border-radius: 8px; transition: transform 0.3s ease;">
-<figcaption style="font-size: 14px; color: #555; margin-top: 10px; font-style: italic;">
-图2: 龙舌兰日出
-</figcaption>
-</figure>
-<h2 id="长岛冰茶">长岛冰茶</h2>
-<p>长岛冰茶，也被称为失身酒，此款鸡尾酒是星座鸡尾酒中代表水瓶座（1月20日至2月19日）的一款鸡尾酒。它的起源说法众多。
-起源一
-起源于冰岛，在二十世纪二十年代美国禁酒令期间的纽约州长岛推广开来，而后在日本登陆并迅速流行开来。
-起源二 在1972年，由长岛橡树滩客栈（Oak Beach
-Inn）的酒保发明了这种以四种基酒混制出来的饮料。
-调和此酒时所使用的酒基本上都是40°以上的烈酒。 起源三
-1970年由名为蔷薇（Rosebud）的人发明的（真正的名字是罗伯特·巴特Robert
-Butt），他在位于长岛南海岸的海滩橡木旅馆（Oak beach
-Inn）工作。与调制所有的古典鸡尾酒规则不同，这款鸡尾酒包括除利口酒外的另外四种含酒精饮料。</p>
-<p>原材料： - 15ml金酒 - 15ml伏特加 - 15ml白朗姆 - 15ml龙舌兰 - 15ml君度
-- 20ml柠檬汁 - 糖浆（非必须） - 可乐</p>
-<figure style="text-align: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 20px auto; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-<img src="/next-blog/2025/01/Bartending_Diary/3.jpg" style="width: 90%; border-radius: 8px; transition: transform 0.3s ease;">
-<figcaption style="font-size: 14px; color: #555; margin-top: 10px; font-style: italic;">
-图3: 长岛冰茶
-</figcaption>
-</figure>
-<h2 id="自由古巴">自由古巴</h2>
-<p>自由古巴，起源于1900年，是用郎姆酒为基酒并兑上适量的可乐而成。自由古巴（Cuba
-Libre）是古巴从西班牙手中独立时，用当时市民口中常用的词来命名的酒。1902年，古巴人民进行了反对西班牙的独立战争，在这场战争中他们使用“Cuba
-libre”（即自由的古巴万岁）作为纲领性口号，于是便有了这款名为“自由古巴”的鸡尾酒。加入可乐后这款鸡尾酒口感轻柔，很适合在海滩酒吧饮用。</p>
-<p>原材料： - 50ml白朗姆 - 10ml柠檬 - 可乐</p>
-<p>。。。（未完待续）</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jiaweijson.top/next-blog/2025/01/summary_2024/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/next-blog/images/avatar.gif">
-      <meta itemprop="name" content="Jiawei Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张佳伟的博客">
-      <meta itemprop="description" content="I love and enjoy the moments that take our breath away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张佳伟的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/next-blog/2025/01/summary_2024/" class="post-title-link" itemprop="url">龙年流水账|2024</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-01-12T00:00:00+08:00">2025-01-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-13 08:32:33" itemprop="dateModified" datetime="2025-02-13T08:32:33+08:00">2025-02-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/next-blog/categories/%E6%9D%82%E8%B0%88/%E6%95%A3%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">散文</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在列车上，想着先写点什么。腊月十三，距离过年还有16天，今年没有腊月三十。环境不太好，下次回家还是买个高铁票，回家对我来说还是一件很有仪式感的事，尽管北京和大同离得很近，但我几乎都是在每次放寒暑假才会回家。</p>
-<p>今年基本上都把时间和精力放在了科研上，2024年初的时候，还是一个小白，看一些复杂的代码和框架有些吃力，那时候会有很多非科研进展的问题要和师兄讨论，改一个代码也需要花费几天。上半年每周开两次组会，我个人体验下来，其实做自己真正感兴趣的事的时候，是特别愿意和别人讨论的，不同灵感的碰撞是快乐的，和师兄开组会，没什么压力，讨论起来就像是和朋友在交流思想，这一刻我好像有些理解了，“有辩论的地方，权威会暂时终止”，我太喜欢这样的学术氛围了。</p>
-<p>上半年前段，这是今年我觉得遇到的最重要的人，如果故事在这里结尾了，其实我还是蛮遗憾的，我很喜欢她。这会不会是今年最大的礼物又是最大的失望呢？</p>
-<p>5、6月的时候，科研遇阻，被算力限制，总感觉要做不下去了。很多时候，我又是幸运的，学校新建的AI平台，管理平台老师的倾心解答，没有他们的帮助，我想9月份第一个科研任务都会完不成。但还好，运气到来的时候，我紧紧攥住，大四毕业的一个假期我都没有干别的事情，每周都和师兄，讨论，做实验，最终9月份写好论文并投了出去。</p>
-<p>研一开学，新的环境，新的朋友，我这一次选择了和大学不同的方式，积极社交，不再把学分绩看的很重，我加入研究生会，竞选团支书，为学校出力，为班级建设，同时继续开展下一个课题。本来是准备11月份的CVPR的，那段时间每天工作真的有12个小时，脑子都是晕乎乎的，遗憾的是最后还是结果不太好。本来10月1号开始，国庆直接加班做，但是11月初的时候师兄推倒之前的改动退回以前的版本重新做，结果最后尽管赶出一版论文，但是中的概率太低，决定撤稿补充实验重投，目前这个工作已经做完了，但可能还是缺一些实验，师兄还在完善，不知道什么时候投出这篇。</p>
-<p>2024年12月底，开始了新的课题，目前还在着手跑实验中，现在的科研进度应该比以前快很多了，我们更多地去讨论思路而不是纠结于实现的细节。与此同时，大老板还让我并行开展一个课题，关于电力方向的，有一点小困难，但是也在尽力推进，不知道寒假能不能做出来。</p>
-<hr />
-<p>距离农历新年的最后一天，家里收拾的差不多了，只待新年的到来。农历乙巳蛇年，作为01年的蛇宝宝，我买了红色的衣服和鞋子，本命年总还是讲究一些。</p>
-<p>先聊近期的科研进展，回家之后花了几天的时间，这次成功解决了风电场景生成的任务，并且取得了不错的效果，准备年后着手写论文。和师兄做的之前的课题，近期准备投到ICML，最近补充了一些实验，马上要提交正文，不知道来不来的及加进去。</p>
-<p>回来见了几个玩的好的高中同学，从德国回来的BIT精工阿政，德国巧克力确实好吃。还有我的几个发小，已经10多年的友谊了，以前听到那些说人生有一两知己实乃幸事我不以为然，等到了长大发现大家越来越忙，可真的这几个好兄弟可以随叫随到，不需要讲究，口无遮拦。</p>
-<hr />
-<p>ICML又撤稿了，不过实验确实不够完善。哎，科研这么难吗？电网新能源出力场景的交叉研究已经做好了，论文已经写好。正月十五已过，新的工作又要开始了。这篇就写到这里，奔赴2025。</p>
-<hr />
-<p>一年又一年，乙巳蛇年。祝愿所有蛇宝宝们在新的一年里灵蛇纳福，巳巳如意。</p>
-<p>（回忆是一条没有归程的路）</p>
 
       
     </div>
