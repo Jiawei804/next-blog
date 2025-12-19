@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/DreamVVT/2.jpg">
 <meta property="og:image" content="https://jiaweijson.top/next-blog/2025/08/DreamVVT/1.jpg">
 <meta property="article:published_time" content="2025-08-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-26T09:23:16.651Z">
+<meta property="article:modified_time" content="2025-12-19T03:13:44.903Z">
 <meta property="article:author" content="Jiawei Zhang">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="虚拟试穿">
@@ -197,9 +197,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-08-26 00:00:00 / Modified: 17:23:16" itemprop="dateCreated datePublished" datetime="2025-08-26T00:00:00+08:00">2025-08-26</time>
+      <time title="Created: 2025-08-26 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-26T00:00:00+08:00">2025-08-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 11:13:44" itemprop="dateModified" datetime="2025-12-19T11:13:44+08:00">2025-12-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -301,14 +307,16 @@ latents，并将裁剪后的agnostic masks 调整为与 agnostic latents
 相同的分辨率。然后，将 agnostic latents、调整大小的 agnostic
 masks、nosie latents 和 pose latents 沿着通道维度进行 concatenate，并
 patchfy 为视频 tokens，记为 <span class="math inline">\(F_{vid} \in
-R^{l_v×c}(其中\)</span>l_v = t × h × w$, <span class="math inline">\(t =
-T/4\)</span>, <span class="math inline">\(h = H/16\)</span>, <span
-class="math inline">\(w = W/16\)</span>, <span class="math inline">\(t,
-h, w\)</span>为输入视频的形状)。由于姿势骨架(pose
+R^{l_v×c}\)</span>(其中<span class="math inline">\(l_v = t × h ×
+w\)</span>, <span class="math inline">\(t = T/4\)</span>, <span
+class="math inline">\(h = H/16\)</span>, <span class="math inline">\(w =
+W/16\)</span>, <span class="math inline">\(t, h,
+w\)</span>为输入视频的形状)。由于姿势骨架(pose
 skeletons)只捕获粗粒度的身体运动，不能完全表示细粒度的服装交互，我们使用
 Qwen2.5-VL 提取属性解纠缠文本描述（attribute-disentangled textual
 description）——包含详细运动描述和高级视觉信息(在推理过程中，与外观相关的描述被替换为与目标服装对应的描述)。这些文本描述随后被Qwen
-LLM 处理成 text tokens，记为 $F_{text} R_{l_t×c_t}。对于 appearance
+LLM 处理成 text tokens，记为 <span class="math inline">\(F_{text} \in
+R_{l_t×c_t}\)</span>。对于 appearance
 branch，首先由视频VAE编码器对关键帧尝试图像逐帧处理，提取 image
 latents，然后将其转化为image tokens，表示为 <span
 class="math inline">\(F_{img} \in R^{l_i×c}\)</span> (其中<span
