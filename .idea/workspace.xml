@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c4f2c75d-e916-4bd7-b90d-7f5d0c55e9ee" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/next-blog.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.next.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.next.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2qKikxAI29tKqsfdlDZBwZVSkQe" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/github_repository/blog/next-blog/source/_posts/2025/fine-tuning&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\github_repository\blog\next-blog\source\_posts\2025\fine-tuning" />
+      <recent name="E:\github_repository\blog\next-blog\source\_posts\2025\Bartending_Diary" />
+      <recent name="E:\github_repository\blog\next-blog\source\_posts" />
+      <recent name="E:\github_repository\blog\next-blog\source\_posts\2024\transformer" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\github_repository\blog\next-blog\source\_posts\2024" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="c4f2c75d-e916-4bd7-b90d-7f5d0c55e9ee" name="更改" comment="" />
+      <created>1734417814347</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734417814347</updated>
+      <workItem from="1734417815699" duration="7563000" />
+      <workItem from="1734590282078" duration="9388000" />
+      <workItem from="1734601057718" duration="39000" />
+      <workItem from="1734603834950" duration="1971000" />
+      <workItem from="1734606095752" duration="3163000" />
+      <workItem from="1734609579311" duration="1120000" />
+      <workItem from="1734610828910" duration="42000" />
+      <workItem from="1734610942020" duration="85000" />
+      <workItem from="1734611275214" duration="164000" />
+      <workItem from="1734611605078" duration="619000" />
+      <workItem from="1734659468880" duration="32000" />
+      <workItem from="1734963676862" duration="15337000" />
+      <workItem from="1735090647097" duration="14256000" />
+      <workItem from="1735179410134" duration="1698000" />
+      <workItem from="1735222319003" duration="2747000" />
+      <workItem from="1735371992809" duration="2068000" />
+      <workItem from="1735397364513" duration="865000" />
+      <workItem from="1735715622288" duration="84000" />
+      <workItem from="1735727837168" duration="652000" />
+      <workItem from="1735879774709" duration="2893000" />
+      <workItem from="1736080227304" duration="7658000" />
+      <workItem from="1736126617897" duration="4858000" />
+      <workItem from="1736157349928" duration="3765000" />
+      <workItem from="1736251831372" duration="2943000" />
+      <workItem from="1736410320839" duration="924000" />
+      <workItem from="1736478394899" duration="720000" />
+      <workItem from="1736664223580" duration="3101000" />
+      <workItem from="1736868097739" duration="2511000" />
+      <workItem from="1736903773916" duration="514000" />
+      <workItem from="1737897429905" duration="9975000" />
+      <workItem from="1738578205291" duration="635000" />
+      <workItem from="1739406518804" duration="383000" />
+      <workItem from="1741140519861" duration="850000" />
+      <workItem from="1742199033330" duration="1031000" />
+      <workItem from="1742352021305" duration="1103000" />
+      <workItem from="1742369848485" duration="1044000" />
+      <workItem from="1742381530820" duration="5352000" />
+      <workItem from="1742469968238" duration="2214000" />
+      <workItem from="1742624744121" duration="7080000" />
+      <workItem from="1742648634683" duration="12000" />
+      <workItem from="1742648713788" duration="295000" />
+      <workItem from="1742794716740" duration="2663000" />
+      <workItem from="1743129184194" duration="9258000" />
+      <workItem from="1743156381238" duration="1153000" />
+      <workItem from="1743158017524" duration="828000" />
+      <workItem from="1743160592343" duration="23000" />
+      <workItem from="1743160642589" duration="361000" />
+      <workItem from="1743210198626" duration="4842000" />
+      <workItem from="1743217274205" duration="432000" />
+      <workItem from="1743410860562" duration="152000" />
+      <workItem from="1743558860617" duration="211000" />
+      <workItem from="1744078006028" duration="185000" />
+      <workItem from="1745717762290" duration="60000" />
+      <workItem from="1756015818652" duration="1501000" />
+      <workItem from="1756086688414" duration="5000" />
+      <workItem from="1756128017711" duration="4067000" />
+      <workItem from="1756167840084" duration="7447000" />
+      <workItem from="1756177714272" duration="7830000" />
+      <workItem from="1756199975881" duration="727000" />
+      <workItem from="1756207504099" duration="47000" />
+      <workItem from="1756537957295" duration="84000" />
+      <workItem from="1759394749525" duration="51000" />
+      <workItem from="1765266638034" duration="530000" />
+      <workItem from="1765370592782" duration="3013000" />
+      <workItem from="1765427457006" duration="3999000" />
+      <workItem from="1765454413872" duration="4395000" />
+      <workItem from="1765622994723" duration="4869000" />
+      <workItem from="1765849186901" duration="5793000" />
+      <workItem from="1765943417703" duration="2806000" />
+      <workItem from="1766106175769" duration="8535000" />
+      <workItem from="1766463269456" duration="44000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
